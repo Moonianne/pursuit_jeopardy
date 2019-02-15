@@ -7,7 +7,7 @@ public class QuestionsModel {
     private String category;
     private String type;
     private String difficulty;
-    private String questions;
+    private String question;
     private String correct_answer;
     private List<String> incorrect_answers;
 
@@ -23,8 +23,8 @@ public class QuestionsModel {
         return difficulty;
     }
 
-    public String getQuestions() {
-        return questions;
+    public String getQuestion() {
+        return question;
     }
 
     public String getCorrect_answer() {
