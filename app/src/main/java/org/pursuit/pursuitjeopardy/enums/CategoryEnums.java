@@ -1,6 +1,7 @@
 package org.pursuit.pursuitjeopardy.enums;
 
-public enum TriviaApiCallCategoryEnums {
+public enum CategoryEnums {
+
     ANY_CATEGORY(""),
     GENERAL_KNOWLEDGE("9"),
     ENTERTAINMENT_BOOKS("10"),
@@ -33,7 +34,7 @@ public enum TriviaApiCallCategoryEnums {
         return linkTranslation;
     }
 
-    TriviaApiCallCategoryEnums(String linkTranslation) {
+    CategoryEnums(String linkTranslation) {
         this.linkTranslation = linkTranslation;
     }
 }

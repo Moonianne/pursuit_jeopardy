@@ -1,9 +1,11 @@
 package org.pursuit.pursuitjeopardy.enums;
 
-public enum TriviaApiCallTypeEnums {
-    ANY_TYPE(""),
-    MULTIPLE("multiple"),
-    TRUE_OR_FALSE("boolean");
+public enum DifficultyEnums {
+
+    ANY_DIFFICULTY(""),
+    EASY("easy"),
+    MEDIUM("medium"),
+    HARD("hard");
 
     private String linkTranslation;
 
@@ -11,8 +13,7 @@ public enum TriviaApiCallTypeEnums {
         return linkTranslation;
     }
 
-    TriviaApiCallTypeEnums(String linkTranslation) {
+    DifficultyEnums(String linkTranslation) {
         this.linkTranslation = linkTranslation;
     }
 }
-

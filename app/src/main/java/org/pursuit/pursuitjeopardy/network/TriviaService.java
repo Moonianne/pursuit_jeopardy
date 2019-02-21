@@ -12,6 +12,10 @@ import retrofit2.http.Query;
 
 public interface TriviaService {
 
+    @GET("api.php?&amount=15")
+    Call<TriviaResponseModel> getTrivia(@Query("category") @NonNull String category,
+                                        @Query("difficulty") @NonNull String difficulty);
+
     /**
      * A token is used by the API to track what questions they have sent to us already, preventing duplicate questions until
      * we have reached the limit of the query. Will expand when necessary.
@@ -19,10 +23,4 @@ public interface TriviaService {
     @GET("api_token.php?command=request")
     Call<TokenModel> getToken();
 
-
-    @GET("api.php?")
-    Call<TriviaResponseModel> getTrivia(@Query("amount") @NonNull String amount,
-                                        @Query("category") @NonNull String category,
-                                        @Query("difficulty") @NonNull String difficulty,
-                                        @Query("type") @NonNull String type);
 }

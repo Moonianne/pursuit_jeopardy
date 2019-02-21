@@ -2,6 +2,9 @@ package org.pursuit.pursuitjeopardy.model;
 
 import java.util.List;
 
+/**
+ * model for questions objects received from TriviaResponseModel List
+ */
 
 public class QuestionsModel {
     private String category;

@@ -2,6 +2,9 @@ package org.pursuit.pursuitjeopardy.model;
 
 import java.util.List;
 
+/**
+ * simple JSON response model for initial response
+ */
 
 public class TriviaResponseModel {
 
