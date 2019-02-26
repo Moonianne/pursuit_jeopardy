@@ -2,7 +2,6 @@ package org.pursuit.pursuitjeopardy.network;
 
 import android.support.annotation.NonNull;
 
-import org.pursuit.pursuitjeopardy.MainActivity;
 import org.pursuit.pursuitjeopardy.model.QuestionRequestModel;
 import org.pursuit.pursuitjeopardy.model.TokenModel;
 import org.pursuit.pursuitjeopardy.model.TriviaResponseModel;
