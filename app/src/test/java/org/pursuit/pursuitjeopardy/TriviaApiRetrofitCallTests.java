@@ -1,11 +1,8 @@
 package org.pursuit.pursuitjeopardy;
 
-// API SOURCE: https://opentdb.com/api_config.php
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
+import org.junit.Ignore;
 import org.pursuit.pursuitjeopardy.enums.CategoryEnums;
 import org.pursuit.pursuitjeopardy.enums.DifficultyEnums;
 import org.pursuit.pursuitjeopardy.model.QuestionRequestModel;
@@ -16,14 +13,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
-    public static final String DEBUG_TAG = "Brahh";
+import static org.pursuit.pursuitjeopardy.MainActivity.DEBUG_TAG;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+public class TriviaApiRetrofitCallTests {
 
+
+    @Ignore
+    public void exampleSetUpForTriviaApiResponse(){
+        /** paste the code under this line into MainActivity , run it, and try it yourself! =]
+         */
         new RetrofitSingleton().triviaApiCall(
                 new QuestionRequestModel(CategoryEnums.HISTORY, DifficultyEnums.ANY_DIFFICULTY),
                 new Callback<TriviaResponseModel>() {
@@ -44,4 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
+
+
+
 }
