@@ -9,12 +9,12 @@ import org.pursuit.pursuitjeopardy.repository.QuestionsRepository;
 
 import java.util.List;
 
-public final class QuestionsViewModel extends ViewModel {
+public final class QuestionViewModel extends ViewModel {
 
     private QuestionsRepository questionsRepository;
     private LiveData<List<List<QuestionsModel>>> listLiveData;
 
-    public QuestionsViewModel() {
+    public QuestionViewModel() {
         questionsRepository = QuestionsRepository.getRepositorySingleInstance();
         listLiveData = questionsRepository.getLiveData();
 

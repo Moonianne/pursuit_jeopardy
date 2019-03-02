@@ -9,18 +9,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
-import org.pursuit.pursuitjeopardy.viewModel.QuestionsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-    private QuestionsViewModel viewModel;
+    private org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel viewModel;
     private List<LinearLayout> layoutList;
 
     @Override
@@ -32,7 +30,7 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
     }
 
     private void setViewModel() {
-        viewModel = ViewModelProviders.of(this).get(QuestionsViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel.class);
         viewModel.getListLiveData().observe(this, new Observer<List<List<QuestionsModel>>>() {
             @Override
             public void onChanged(@Nullable List<List<QuestionsModel>> lists) {
