@@ -3,4 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="cardview_color">#644FDF</color>
+    <color name="category_color">#FFF6A9</color>
+    <color name="gameboard_color">#7808DA</color>
 </resources>
