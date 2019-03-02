@@ -2,6 +2,7 @@ package org.pursuit.pursuitjeopardy.view;
 
 // API SOURCE: https://opentdb.com/api_config.php
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,14 @@ public class MainActivity extends AppCompatActivity implements ViewSwapper {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startBoard();
+
     }
 
 
     @Override
     public void startBoard() {
-        inflateFragment(GridFragment.newInstance(), true);
+        startActivity(new Intent(this,GameBoardActivity.class));
     }
 
     @Override

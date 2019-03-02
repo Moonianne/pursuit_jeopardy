@@ -14,6 +14,9 @@ public class RetrofitSingleton {
 
     private static Retrofit instance;
 
+    private RetrofitSingleton() {
+    }
+
     /**
      * single instance is private because we gain better control over the parameter
      * inputs if we encapsulate it's use into a public method that can check parameters.
@@ -34,16 +37,15 @@ public class RetrofitSingleton {
     /**
      * This callback's response returns a TriviaResponseModel object that contains a list of
      * QuestionModel objects which are the actual questions and there states.
-     *
+     * <p>
      * SEE TriviaApiRetrofitCallTests FOR EXAMPLE CALL!
      *
      * @param requestModel pass in new QuestionRequestModel object with desired enum descriptions of the particular call.
      * @param callback     pass in new Callback of Object TriviaResponseModel.
      */
-    public void triviaApiCall(@NonNull QuestionRequestModel requestModel,
-                              @NonNull Callback<TriviaResponseModel> callback) {
-        RetrofitSingleton.getInstance()
-                .create(TriviaService.class)
+    public static void triviaApiCall(@NonNull QuestionRequestModel requestModel,
+                                     @NonNull Callback<TriviaResponseModel> callback) {
+        RetrofitSingleton.getInstance().create(TriviaService.class)
                 .getTrivia(requestModel.categoryEnums, requestModel.difficultyEnums)
                 .enqueue(callback);
     }

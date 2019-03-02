@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface TriviaService {
 
-    @GET("api.php?&amount=15")
+    @GET("api.php?&amount=20")
     Call<TriviaResponseModel> getTrivia(@Query("category") @NonNull String category,
                                         @Query("difficulty") @NonNull String difficulty);
 
