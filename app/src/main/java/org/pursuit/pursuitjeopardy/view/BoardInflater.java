@@ -38,9 +38,8 @@ public class BoardInflater {
             final CardView pointsTileCardView = new CardView(linearLayout.getContext());
             pointsTileCardView.setClickable(true);
             pointsTileCardView.setFocusable(true);
-            pointsTileCardView.setId(questionsModels.get(i).getQuestion().length());
             pointsTileCardView.setLayoutParams(layoutParams);
-            pointsTileCardView.setTag(questionsModels.get(i));
+            pointsTileCardView.setTag(questionsModels.get(i).getCategory()+i);
             pointsTileCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

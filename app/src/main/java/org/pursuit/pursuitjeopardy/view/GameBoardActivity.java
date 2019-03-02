@@ -13,12 +13,15 @@ import android.widget.LinearLayout;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
+import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-    private org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel viewModel;
+    private QuestionViewModel viewModel;
     private List<LinearLayout> layoutList;
 
     @Override
@@ -30,7 +33,9 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
     }
 
     private void setViewModel() {
-        viewModel = ViewModelProviders.of(this).get(org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel.class);
+
+        viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
+
         viewModel.getListLiveData().observe(this, new Observer<List<List<QuestionsModel>>>() {
             @Override
             public void onChanged(@Nullable List<List<QuestionsModel>> lists) {
@@ -42,8 +47,8 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
                         boardInflater.setOnTileSelectedListener(new BoardInflater.OnTileClickedListener() {
                             @Override
                             public void onTileClicked(View view) {
-                                QuestionsModel questionsModel = (QuestionsModel) view.getTag();
-                                //Toast.makeText(GameBoardActivity.this, questionsModel.getQuestion(), Toast.LENGTH_SHORT).show();
+                                String questionKey = (String) view.getTag();
+                                Toast.makeText(GameBoardActivity.this, questionKey, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
