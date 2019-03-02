@@ -11,6 +11,7 @@ import org.pursuit.pursuitjeopardy.model.TriviaResponseModel;
 import org.pursuit.pursuitjeopardy.network.RetrofitSingleton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,29 +20,15 @@ import retrofit2.Response;
 
 
 public class QuestionsRepository {
-
     private static QuestionsRepository repositorySingleInstance;
+
     private List<List<QuestionsModel>> lists;
     private MutableLiveData<List<List<QuestionsModel>>> liveData;
-    private List<QuestionsModel> category1;
-    private List<QuestionsModel> category2;
-    private List<QuestionsModel> category3;
-    private List<QuestionsModel> category4;
-    private List<QuestionsModel> category5;
+
 
     private QuestionsRepository() {
         setList();
         populateAllCategories();
-    }
-
-    private void setList() {
-        this.liveData = new MutableLiveData<>();
-        this.lists = new ArrayList<>();
-        this.category1 = new ArrayList<>();
-        this.category2 = new ArrayList<>();
-        this.category3 = new ArrayList<>();
-        this.category4 = new ArrayList<>();
-        this.category5 = new ArrayList<>();
     }
 
     public static QuestionsRepository getRepositorySingleInstance() {
@@ -53,15 +40,25 @@ public class QuestionsRepository {
         }
     }
 
-    private void populateCategory1() {
+    private void setList() {
+        this.liveData = new MutableLiveData<>();
+        this.lists = new ArrayList<>();
+    }
+
+    private void populateAllCategories() {
+        for (int i = 0; i < 5; i++) {
+            populateCategory(CategoryEnums.randomCategory(),DifficultyEnums.ANY_DIFFICULTY);
+        }
+    }
+
+    private void populateCategory(CategoryEnums random, DifficultyEnums difficultyEnums) {
         RetrofitSingleton.triviaApiCall(new QuestionRequestModel(
-                        CategoryEnums.randomCategory(),
-                        DifficultyEnums.ANY_DIFFICULTY),
+                        random,
+                        difficultyEnums),
                 new Callback<TriviaResponseModel>() {
                     @Override
                     public void onResponse(Call<TriviaResponseModel> call, Response<TriviaResponseModel> response) {
-                        List<QuestionsModel> questionResponse = response.body().getResults();
-                        parseRetrofitResponseList(questionResponse);
+                        parseRetrofitResponseList(response.body().getResults());
                         Log.v("sasuke1", response.toString());
 
                     }
@@ -74,120 +71,28 @@ public class QuestionsRepository {
 
     }
 
-    private void populateCategory2() {
-        RetrofitSingleton.triviaApiCall(new QuestionRequestModel(
-                        CategoryEnums.randomCategory(),
-                        DifficultyEnums.ANY_DIFFICULTY),
-                new Callback<TriviaResponseModel>() {
-                    @Override
-                    public void onResponse(Call<TriviaResponseModel> call, Response<TriviaResponseModel> response) {
-                        List<QuestionsModel> questionResponse = response.body().getResults();
-                        category2 = parseRetrofitResponseList(questionResponse);
-                        Log.v("sasuke2", response.toString());
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<TriviaResponseModel> call, Throwable t) {
-
-                    }
-                });
-
-    }
-
-    private void populateCategory3() {
-        RetrofitSingleton.triviaApiCall(new QuestionRequestModel(
-                        CategoryEnums.randomCategory(),
-                        DifficultyEnums.ANY_DIFFICULTY),
-                new Callback<TriviaResponseModel>() {
-                    @Override
-                    public void onResponse(Call<TriviaResponseModel> call, Response<TriviaResponseModel> response) {
-                        List<QuestionsModel> questionResponse = response.body().getResults();
-                        category3 = parseRetrofitResponseList(questionResponse);
-                        Log.v("sasuke3", response.toString());
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<TriviaResponseModel> call, Throwable t) {
-
-                    }
-                });
-
-    }
-
-    private void populateCategory4() {
-        RetrofitSingleton.triviaApiCall(new QuestionRequestModel(
-                        CategoryEnums.randomCategory(),
-                        DifficultyEnums.ANY_DIFFICULTY),
-                new Callback<TriviaResponseModel>() {
-                    @Override
-                    public void onResponse(Call<TriviaResponseModel> call, Response<TriviaResponseModel> response) {
-                        List<QuestionsModel> questionResponse = response.body().getResults();
-                        category4 = parseRetrofitResponseList(questionResponse);
-                        Log.v("sasuke4", response.toString());
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<TriviaResponseModel> call, Throwable t) {
-
-                    }
-                });
-
-    }
-
-    private void populateCategory5() {
-        RetrofitSingleton.triviaApiCall(new QuestionRequestModel(
-                        CategoryEnums.randomCategory(),
-                        DifficultyEnums.ANY_DIFFICULTY),
-                new Callback<TriviaResponseModel>() {
-                    @Override
-                    public void onResponse(Call<TriviaResponseModel> call, Response<TriviaResponseModel> response) {
-                        List<QuestionsModel> questionResponse = response.body().getResults();
-                        category5 = parseRetrofitResponseList(questionResponse);
-                        Log.v("sasuke5", response.toString());
-                    }
-
-                    @Override
-                    public void onFailure(Call<TriviaResponseModel> call, Throwable t) {
-
-                    }
-                });
-
-    }
-
-    private void populateAllCategories() {
-        populateCategory1();
-        populateCategory2();
-        populateCategory3();
-        populateCategory4();
-        populateCategory5();
-    }
-
-    private List<QuestionsModel> parseRetrofitResponseList(List<QuestionsModel> questionsModels) {
-        List<QuestionsModel> questionsModelListWith3Questions = new ArrayList<>();
-        questionsModelListWith3Questions.add(null);
-        questionsModelListWith3Questions.add(null);
-        questionsModelListWith3Questions.add(null);
+    private void parseRetrofitResponseList(List<QuestionsModel> questionsModels) {
+        //TODO: Change to array[];
+        // QuestionsModel[] questionsModelsArraywith3Questions = new QuestionsModel[3];
+        List<QuestionsModel> questionsModelListWith3Questions =
+                new ArrayList<>(Arrays.asList(new QuestionsModel[]{null, null, null}));
         for (QuestionsModel questions : questionsModels) {
-            if (questions.getDifficulty().equals("easy")){
-                questionsModelListWith3Questions.add(0,questions);
+            if (questions.getDifficulty().equals("easy")) {
+                questionsModelListWith3Questions.add(0, questions);
             }
             if (questions.getDifficulty().equals("medium")) {
-                questionsModelListWith3Questions.add(1,questions);
+                questionsModelListWith3Questions.add(1, questions);
             }
             if (questions.getDifficulty().equals("hard")) {
-                questionsModelListWith3Questions.add(2,questions);
+                questionsModelListWith3Questions.add(2, questions);
             }
-
         }
+        //TODO: separate this method to storeMethod
         lists.add(questionsModelListWith3Questions);
         liveData.setValue(lists);
-        return questionsModelListWith3Questions;
     }
 
-    public MutableLiveData<List<List<QuestionsModel>>> getLiveData(){
+    public MutableLiveData<List<List<QuestionsModel>>> getLiveData() {
         return liveData;
     }
 
