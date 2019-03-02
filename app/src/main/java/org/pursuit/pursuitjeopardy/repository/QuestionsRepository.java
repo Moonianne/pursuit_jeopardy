@@ -12,7 +12,9 @@ import org.pursuit.pursuitjeopardy.network.RetrofitSingleton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +26,7 @@ public class QuestionsRepository {
 
     private List<List<QuestionsModel>> lists;
     private MutableLiveData<List<List<QuestionsModel>>> liveData;
+    private Map questionsMap;
 
 
     private QuestionsRepository() {
@@ -43,6 +46,7 @@ public class QuestionsRepository {
     private void setList() {
         this.liveData = new MutableLiveData<>();
         this.lists = new ArrayList<>();
+        this.questionsMap = new HashMap<String,QuestionsModel>();
     }
 
     private void populateAllCategories() {
@@ -76,16 +80,17 @@ public class QuestionsRepository {
         // QuestionsModel[] questionsModelsArraywith3Questions = new QuestionsModel[3];
         List<QuestionsModel> questionsModelListWith3Questions =
                 new ArrayList<>(Arrays.asList(new QuestionsModel[]{null, null, null}));
-        for (QuestionsModel questions : questionsModels) {
-            if (questions.getDifficulty().equals("easy")) {
-                questionsModelListWith3Questions.add(0, questions);
+        for (int i = 0; i < questionsModels.size(); i++) {
+            if (questionsModels.get(i).getDifficulty().equals("easy")) {
+                questionsModelListWith3Questions.add(0, questionsModels.get(i));
             }
-            if (questions.getDifficulty().equals("medium")) {
-                questionsModelListWith3Questions.add(1, questions);
+            if (questionsModels.get(i).getDifficulty().equals("medium")) {
+                questionsModelListWith3Questions.add(1, questionsModels.get(i));
             }
-            if (questions.getDifficulty().equals("hard")) {
-                questionsModelListWith3Questions.add(2, questions);
+            if (questionsModels.get(i).getDifficulty().equals("hard")) {
+                questionsModelListWith3Questions.add(2, questionsModels.get(i));
             }
+            questionsMap.put(questionsModels.get(i).getCategory()+i,questionsModels.get(i));
         }
         //TODO: separate this method to storeMethod
         lists.add(questionsModelListWith3Questions);
@@ -95,5 +100,11 @@ public class QuestionsRepository {
     public MutableLiveData<List<List<QuestionsModel>>> getLiveData() {
         return liveData;
     }
+
+    public Map<String,QuestionsModel> getQuestionsMap(){
+        return questionsMap;
+    }
+
+
 
 }
