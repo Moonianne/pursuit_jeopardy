@@ -1,5 +1,10 @@
 package org.pursuit.pursuitjeopardy.enums;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public enum CategoryEnums {
 
     ANY_CATEGORY(""),
@@ -32,6 +37,13 @@ public enum CategoryEnums {
 
     public String getLinkTranslation() {
         return linkTranslation;
+    }
+
+    public static CategoryEnums randomCategory(){
+        List<CategoryEnums> categoryEnumsList = Collections.unmodifiableList(Arrays.asList(values()));
+        int size = categoryEnumsList.size();
+        Random randomNumber = new Random();
+        return categoryEnumsList.get(randomNumber.nextInt(size));
     }
 
     CategoryEnums(String linkTranslation) {
