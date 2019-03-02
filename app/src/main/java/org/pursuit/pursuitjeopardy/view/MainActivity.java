@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import org.pursuit.pursuitjeopardy.R;
-import org.pursuit.pursuitjeopardy.controller.ViewSwapper;
+import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 
-public class MainActivity extends AppCompatActivity implements ViewSwapper {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

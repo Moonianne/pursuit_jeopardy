@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.pursuit.pursuitjeopardy.R;
-import org.pursuit.pursuitjeopardy.controller.ViewSwapper;
+import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 
 public class GridFragment extends Fragment {
-    private ViewSwapper viewSwapper;
+    private OnFragmentInteractionListener onFragmentInteractionListener;
     private View rootView;
 
     public static GridFragment newInstance() {
@@ -22,7 +22,7 @@ public class GridFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        viewSwapper = (ViewSwapper) context;
+        onFragmentInteractionListener = (OnFragmentInteractionListener) context;
     }
 
     @Override
