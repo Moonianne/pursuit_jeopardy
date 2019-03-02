@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
+import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
@@ -26,8 +27,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     @Override
-    public void displayQuestion() {
-        inflateFragment(QuestionFragment.newInstance("something", "here"));
+    public void displayQuestion(QuestionsModel question) {
+        //No-op
     }
 
     private void inflateFragment(Fragment fragment) {
