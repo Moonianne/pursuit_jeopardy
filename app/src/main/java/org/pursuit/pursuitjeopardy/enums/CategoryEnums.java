@@ -2,12 +2,13 @@ package org.pursuit.pursuitjeopardy.enums;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public enum CategoryEnums {
 
-    ANY_CATEGORY(""),
     GENERAL_KNOWLEDGE("9"),
     ENTERTAINMENT_BOOKS("10"),
     ENTERTAINMENT_FILM("11"),
@@ -39,11 +40,13 @@ public enum CategoryEnums {
         return linkTranslation;
     }
 
-    public static CategoryEnums randomCategory(){
-        List<CategoryEnums> categoryEnumsList = Collections.unmodifiableList(Arrays.asList(values()));
-        int size = categoryEnumsList.size();
-        Random randomNumber = new Random();
-        return categoryEnumsList.get(randomNumber.nextInt(size));
+    public static CategoryEnums randomCategory() {
+        final List<CategoryEnums> categoryEnumsList =
+                Collections.unmodifiableList(Arrays.asList(values()));
+        final Random randomNumber = new Random();
+        final int size = categoryEnumsList.size();
+        int selected = randomNumber.nextInt(size);
+        return categoryEnumsList.get(selected);
     }
 
     CategoryEnums(String linkTranslation) {

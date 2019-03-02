@@ -74,7 +74,7 @@ public class BoardInflater {
             pointsTileCardView.setBackgroundColor(linearLayout.getResources().getColor(R.color.cardview_color));
             pointsTileCardView.setId(questionsModels.get(i).getQuestion().length());
             pointsTileCardView.setLayoutParams(layoutParams);
-            pointsTileCardView.setTag(questionsModels.get(i));
+            pointsTileCardView.setTag(questionsModels.get(i).getCategory()+i);
             pointsTileCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
