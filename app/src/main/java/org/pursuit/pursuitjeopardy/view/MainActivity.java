@@ -18,13 +18,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startBoard();
-
     }
-
 
     @Override
     public void startBoard() {
-        startActivity(new Intent(this,GameBoardActivity.class));
+        startActivity(new Intent(this, GameBoardActivity.class));
     }
 
     @Override
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         inflateFragment(QuestionFragment.newInstance("something", "here"));
     }
 
-    private void inflateFragment(Fragment fragment){
+    private void inflateFragment(Fragment fragment) {
         inflateFragment(fragment, false);
     }
 
