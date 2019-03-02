@@ -13,8 +13,10 @@ import org.pursuit.pursuitjeopardy.network.RetrofitSingleton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,8 +52,14 @@ public class QuestionsRepository {
     }
 
     private void populateAllCategories() {
+        final Set<CategoryEnums> selectedCategory = new HashSet<>();
         for (int i = 0; i < 5; i++) {
-            populateCategory(CategoryEnums.randomCategory(),DifficultyEnums.ANY_DIFFICULTY);
+            CategoryEnums random = CategoryEnums.randomCategory();
+            while (selectedCategory.contains(random)) {
+                random = CategoryEnums.randomCategory();
+            }
+            selectedCategory.add(random);
+            populateCategory(CategoryEnums.randomCategory(), DifficultyEnums.ANY_DIFFICULTY);
         }
     }
 

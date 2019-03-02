@@ -9,30 +9,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import org.pursuit.pursuitjeopardy.R;
-import org.pursuit.pursuitjeopardy.controller.ViewSwapper;
+import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
+import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 
-public class MainActivity extends AppCompatActivity implements ViewSwapper {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startBoard();
-
     }
-
 
     @Override
     public void startBoard() {
-        startActivity(new Intent(this,GameBoardActivity.class));
+        startActivity(new Intent(this, GameBoardActivity.class));
     }
 
     @Override
-    public void displayQuestion() {
-        inflateFragment(QuestionFragment.newInstance("something", "here"));
+    public void displayQuestion(QuestionsModel question) {
+        //No-op
     }
 
-    private void inflateFragment(Fragment fragment){
+    private void inflateFragment(Fragment fragment) {
         inflateFragment(fragment, false);
     }
 
