@@ -59,7 +59,7 @@ public class QuestionsRepository {
                 random = CategoryEnums.randomCategory();
             }
             selectedCategory.add(random);
-            populateCategory(CategoryEnums.randomCategory(), DifficultyEnums.ANY_DIFFICULTY);
+            populateCategory(random, DifficultyEnums.ANY_DIFFICULTY);
         }
     }
 

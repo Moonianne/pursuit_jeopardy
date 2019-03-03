@@ -2,13 +2,18 @@ package org.pursuit.pursuitjeopardy.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
@@ -17,32 +22,39 @@ import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     private QuestionViewModel viewModel;
     private List<LinearLayout> layoutList;
+    private Drawable[] drawables;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        viewGroup.setClipChildren(false);
         findAndLoadLayout();
         setViewModel();
+        drawables = new Drawable[]{getResources().getDrawable(R.drawable.n200),
+                getResources().getDrawable(R.drawable.n400),
+                getResources().getDrawable(R.drawable.n600)};
     }
 
     private void setViewModel() {
-
         viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-
         viewModel.getListLiveData().observe(this, new Observer<List<List<QuestionsModel>>>() {
             @Override
             public void onChanged(@Nullable List<List<QuestionsModel>> lists) {
                 assert lists != null;
                 if (lists.size() == 5) {
                     for (int i = 0; i < lists.size(); i++) {
-                        BoardInflater boardInflater = new BoardInflater(layoutList.get(i), lists.get(i));
+                        BoardInflater boardInflater = new BoardInflater(layoutList.get(i), lists.get(i), drawables);
                         boardInflater.populateLayout();
                         boardInflater.setOnTileSelectedListener(new BoardInflater.OnTileClickedListener() {
                             @Override
