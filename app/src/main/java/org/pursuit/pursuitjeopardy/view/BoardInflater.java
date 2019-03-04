@@ -54,18 +54,14 @@ public class BoardInflater {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 1.0f);
-
         layoutParams.setMargins(16, 16, 16, 16);
-
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 1.2f);
-
         TextView category = new TextView(linearLayout.getContext());
         category.setLayoutParams(textParams);
         category.setPadding(8,8,8,8);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             category.setAutoSizeTextTypeUniformWithConfiguration(
                     1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
@@ -73,7 +69,6 @@ public class BoardInflater {
             TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
                     category,1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
         }
-
         category.setText(questionsModels.get(0).getCategory());
         category.setTypeface(Typeface.DEFAULT_BOLD);
         category.setTextColor(linearLayout.getResources().getColor(R.color.category_color));
@@ -92,8 +87,6 @@ public class BoardInflater {
             pointsTileCardView.setBackgroundColor(linearLayout.getResources().getColor(R.color.cardview_color));
             pointsTileCardView.setLayoutParams(layoutParams);
             pointsTileCardView.setTag(questionsModels.get(i).getCategory()+i);
-
-//            final Animation click = animations.getClick();
             pointsTileCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,7 +94,6 @@ public class BoardInflater {
                     animations.setAnimations(pointsTileCardView,linearLayout).startAnimation(animations.getClick());
                 }
             });
-
             linearLayout.addView(pointsTileCardView);
         }
     }

@@ -1,9 +1,8 @@
 package org.pursuit.pursuitjeopardy;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.support.v7.widget.CardView;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -50,6 +49,32 @@ public class Animations {
         expand.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+
+                cardview.animate().alpha(0.0f).setStartDelay(1000).setDuration(1500).setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        cardview.setOnClickListener(null);
+                        cardview.clearAnimation();
+                        cardview.setBackgroundColor(cardview.getResources().getColor(
+                                R.color.cardview_was_already_previously_selected_already_color));
+                        cardview.setAlpha(.4f);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
 
             }
 
