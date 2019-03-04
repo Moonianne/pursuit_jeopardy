@@ -56,12 +56,9 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
                     for (int i = 0; i < lists.size(); i++) {
                         BoardInflater boardInflater = new BoardInflater(layoutList.get(i), lists.get(i), drawables);
                         boardInflater.populateLayout();
-                        boardInflater.setOnTileSelectedListener(new BoardInflater.OnTileClickedListener() {
-                            @Override
-                            public void onTileClicked(View view) {
-                                String questionKey = (String) view.getTag();
-                                Toast.makeText(GameBoardActivity.this, questionKey, Toast.LENGTH_SHORT).show();
-                            }
+                        boardInflater.setOnTileSelectedListener(view -> {
+                            String questionKey = (String) view.getTag();
+
                         });
                     }
                 }
@@ -88,8 +85,8 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
     }
 
     @Override
-    public void displayQuestion(QuestionsModel question) {
-        inflateFragment(QuestionFragment.newInstance(question), true);
+    public void displayQuestion(String key) {
+        inflateFragment(QuestionFragment.newInstance(key), true);
     }
 
     private void inflateFragment(Fragment fragment) {

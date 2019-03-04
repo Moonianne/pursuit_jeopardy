@@ -5,5 +5,5 @@ import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 public interface OnFragmentInteractionListener {
     void startBoard();
 
-    void displayQuestion(QuestionsModel question);
+    void displayQuestion(String key);
 }
