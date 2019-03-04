@@ -1,6 +1,7 @@
 package org.pursuit.pursuitjeopardy.view;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,18 +12,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.pursuit.pursuitjeopardy.R;
-import org.pursuit.pursuitjeopardy.model.QuestionsModel;
+import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 public class QuestionFragment extends Fragment {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
 
+    private QuestionViewModel viewModel;
     private TextView questionView;
-    private String question;
+    private String viewmodelKey;
 
-    public static QuestionFragment newInstance(@NonNull QuestionsModel question) {
+    public static QuestionFragment newInstance(@NonNull String key) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(QUESTION_KEY, question.getQuestion());
+        args.putString(QUESTION_KEY, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,7 +33,8 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            question = getArguments().getString(QUESTION_KEY);
+            viewmodelKey = getArguments().getString(QUESTION_KEY);
+            viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
         } else {
             throw new IllegalArgumentException("Fragment Needs a Question");
         }
@@ -47,6 +50,6 @@ public class QuestionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         questionView = view.findViewById(R.id.text_question);
-        questionView.setText(question);
+        questionView.setText(viewModel.getQuestion(viewmodelKey));
     }
 }

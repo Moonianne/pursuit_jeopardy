@@ -15,7 +15,7 @@ import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity{
     ImageView logo;
 
     @Override
@@ -44,15 +44,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         logo.startAnimation(spin);
     }
 
-    @Override
     public void startBoard() {
         startActivity(new Intent(this, GameBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         finish();
-    }
-
-    @Override
-    public void displayQuestion(QuestionsModel question) {
-        //No-op
     }
 
     private void inflateFragment(Fragment fragment) {

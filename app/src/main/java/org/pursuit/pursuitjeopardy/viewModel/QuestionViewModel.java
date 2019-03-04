@@ -17,7 +17,6 @@ import java.util.Random;
 
 
 public final class QuestionViewModel extends ViewModel {
-
     private QuestionsRepository questionsRepository;
     private LiveData<List<List<QuestionsModel>>> listLiveData;
     private Map<String, QuestionsModel> questionMap;
