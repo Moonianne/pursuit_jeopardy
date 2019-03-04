@@ -1,6 +1,7 @@
 package org.pursuit.pursuitjeopardy.view;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +17,7 @@ import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 public class QuestionFragment extends Fragment {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
 
-    private QuestionViewModel questionViewModel;
+    private QuestionViewModel viewModel;
     private TextView questionView;
     private String viewmodelKey;
 
@@ -33,6 +34,7 @@ public class QuestionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             viewmodelKey = getArguments().getString(QUESTION_KEY);
+            viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
         } else {
             throw new IllegalArgumentException("Fragment Needs a Question");
         }
@@ -48,6 +50,6 @@ public class QuestionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         questionView = view.findViewById(R.id.text_question);
-        questionView.setText(viewmodelKey);
+        questionView.setText(viewModel.getQuestion(viewmodelKey));
     }
 }

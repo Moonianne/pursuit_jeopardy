@@ -48,19 +48,16 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
 
     private void setViewModel() {
         viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-        viewModel.getListLiveData().observe(this, new Observer<List<List<QuestionsModel>>>() {
-            @Override
-            public void onChanged(@Nullable List<List<QuestionsModel>> lists) {
-                assert lists != null;
-                if (lists.size() == 5) {
-                    for (int i = 0; i < lists.size(); i++) {
-                        BoardInflater boardInflater = new BoardInflater(layoutList.get(i), lists.get(i), drawables);
-                        boardInflater.populateLayout();
-                        boardInflater.setOnTileSelectedListener(view -> {
-                            String questionKey = (String) view.getTag();
-
-                        });
-                    }
+        viewModel.getListLiveData().observe(this, lists -> {
+            assert lists != null;
+            if (lists.size() == 5) {
+                for (int i = 0; i < lists.size(); i++) {
+                    BoardInflater boardInflater = new BoardInflater(layoutList.get(i), lists.get(i), drawables);
+                    boardInflater.populateLayout();
+                    boardInflater.setOnTileSelectedListener(view -> {
+                        String questionKey = (String) view.getTag();
+                        inflateFragment(QuestionFragment.newInstance(questionKey), true);
+                    });
                 }
             }
         });
