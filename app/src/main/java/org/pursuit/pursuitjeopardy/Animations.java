@@ -26,13 +26,14 @@ public class Animations {
     public CardView setAnimations(final CardView cardview, final LinearLayout linearLayout){
 
         cardview.setAnimation(click);
+        linearLayout.setClipChildren(false);
 
         click.setAnimationListener(new Animation.AnimationListener() {
 
             @Override
             public void onAnimationStart(Animation animation) {
                 cardview.setElevation(1000000000);
-                linearLayout.setElevation(999999999);
+                linearLayout.setElevation(999999998);
             }
 
             @Override

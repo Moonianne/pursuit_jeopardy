@@ -49,7 +49,10 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        view.setAlpha(0);
+        view.setElevation(999999999);
         questionView = view.findViewById(R.id.text_question);
         questionView.setText(viewModel.getQuestion(viewmodelKey));
+        view.animate().alpha(1.0f).setStartDelay(1000).setDuration(1200);
     }
 }
