@@ -56,7 +56,7 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
                     boardInflater.populateLayout();
                     boardInflater.setOnTileSelectedListener(view -> {
                         String questionKey = (String) view.getTag();
-                        inflateFragment(QuestionFragment.newInstance(questionKey), true);
+                        displayQuestion(questionKey);
                     });
                 }
             }
