@@ -46,8 +46,9 @@ public final class QuestionViewModel extends ViewModel {
             return new String[]{"True", "False"};
         }
         List<String> answers = questionsModel.getIncorrect_answers();
+        String[] result = new String[answers.size()];
         Collections.shuffle(answers);
-        answers.add(questionsModel.getCategory());
-        return (String[]) answers.toArray();
+        answers.add(questionsModel.getCorrect_answer());
+        return answers.toArray(result);
     }
 }
