@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.pursuit.pursuitjeopardy.R;
@@ -18,6 +20,7 @@ public class QuestionFragment extends Fragment {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
 
     private QuestionViewModel viewModel;
+    private RadioGroup answerRadioGroup;
     private TextView questionView;
     private String viewmodelKey;
 
@@ -50,6 +53,15 @@ public class QuestionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         questionView = view.findViewById(R.id.text_question);
+        answerRadioGroup = view.findViewById(R.id.answers_radio);
         questionView.setText(viewModel.getQuestion(viewmodelKey));
+
+        String[] ab = viewModel.getAnswer(viewmodelKey);
+        for (int i = 0; i < ab.length; i++) {
+            RadioButton radioButtonView = new RadioButton(view.getContext());
+            radioButtonView.setText(ab[i]);
+            answerRadioGroup.addView(radioButtonView, i);
+            //((ViewGroup) layout.getParent()).removeView(layout);
+        }
     }
 }
