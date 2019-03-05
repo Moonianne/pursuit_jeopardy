@@ -1,28 +1,20 @@
 package org.pursuit.pursuitjeopardy.view;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
-import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
