@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+public final class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     private QuestionViewModel viewModel;
     private List<LinearLayout> layoutList;
     private Drawable[] drawables;
@@ -74,6 +74,11 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
         inflateFragment(QuestionFragment.newInstance(key), true);
     }
 
+    @Override
+    public void displayResult(boolean isCorrect) {
+        inflateFragment(ResultFragment.newInstance(isCorrect));
+    }
+
     private void inflateFragment(Fragment fragment) {
         inflateFragment(fragment, false);
     }
@@ -85,4 +90,5 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
         if (addToBack) fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
 }

@@ -2,6 +2,7 @@ package org.pursuit.pursuitjeopardy.view;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,20 +10,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.pursuit.pursuitjeopardy.R;
+import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
-public class QuestionFragment extends Fragment {
+public final class QuestionFragment extends Fragment implements View.OnClickListener {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
 
+    private OnFragmentInteractionListener onFragmentInteractionListener;
     private QuestionViewModel viewModel;
     private RadioGroup answerRadioGroup;
     private TextView questionView;
+    private Button submitButton;
     private String viewmodelKey;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        onFragmentInteractionListener = (OnFragmentInteractionListener) context;
+    }
 
     public static QuestionFragment newInstance(@NonNull String key) {
         QuestionFragment fragment = new QuestionFragment();
@@ -56,14 +67,26 @@ public class QuestionFragment extends Fragment {
         view.setElevation(999999999);
         questionView = view.findViewById(R.id.text_question);
         answerRadioGroup = view.findViewById(R.id.answers_radio);
+        submitButton = view.findViewById(R.id.button_submit);
+        submitButton.setOnClickListener(this);
         questionView.setText(viewModel.getQuestion(viewmodelKey));
 
-        String[] ab = viewModel.getAnswer(viewmodelKey);
+        String[] ab = viewModel.getAnswers(viewmodelKey);
         for (int i = 0; i < ab.length; i++) {
             RadioButton radioButtonView = new RadioButton(view.getContext());
             radioButtonView.setText(ab[i]);
             answerRadioGroup.addView(radioButtonView, i);
         }
         view.animate().alpha(1.0f).setStartDelay(1000).setDuration(1200);
+    }
+
+    @Override
+    public void onClick(View v) {
+        RadioButton radioButton = answerRadioGroup.findViewById(answerRadioGroup.getCheckedRadioButtonId());
+        boolean isCorrect = viewModel
+                .getCorrect(viewmodelKey)
+                .equals(radioButton.getText().toString());
+
+        onFragmentInteractionListener.displayResult(isCorrect);
     }
 }
