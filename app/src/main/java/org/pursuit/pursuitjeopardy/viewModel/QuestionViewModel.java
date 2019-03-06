@@ -39,6 +39,8 @@ public final class QuestionViewModel extends ViewModel {
         return questionMap.get(key).getQuestion();
     }
 
+    public String qetQuestionDifficulty(String key){ return questionMap.get(key).getDifficulty();}
+
     public String[] getAnswers(String key) {
         QuestionsModel questionsModel = questionMap.get(key);
         if (questionsModel.getCorrect_answer().equals("true") ||
@@ -55,5 +57,21 @@ public final class QuestionViewModel extends ViewModel {
     public String getCorrect(String key) {
         QuestionsModel questionsModel = questionMap.get(key);
         return questionsModel.getCorrect_answer();
+    }
+
+    public int retrievePoints(boolean isCorrect, String questionDifficulty) {
+        if (isCorrect) {
+            switch (questionDifficulty) {
+                case "easy":
+                    return 200;
+                case "medium":
+                    return 400;
+                case "hard":
+                    return 600;
+                default:
+                    return 0;
+            }
+        }
+        return 0;
     }
 }

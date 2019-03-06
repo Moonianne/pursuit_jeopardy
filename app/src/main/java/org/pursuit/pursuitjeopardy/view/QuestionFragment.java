@@ -86,7 +86,9 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
         boolean isCorrect = viewModel
                 .getCorrect(viewmodelKey)
                 .equals(radioButton.getText().toString());
-
+        viewModel.retrievePoints(isCorrect,viewModel.qetQuestionDifficulty(viewmodelKey));
         onFragmentInteractionListener.displayResult(isCorrect);
     }
+
+
 }
