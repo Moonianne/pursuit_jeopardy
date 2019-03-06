@@ -29,6 +29,7 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
     private Button submitButton;
     private String viewmodelKey;
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -77,6 +78,7 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
             radioButtonView.setText(ab[i]);
             answerRadioGroup.addView(radioButtonView, i);
         }
+        onFragmentInteractionListener.checkTileIsAnswered(false, viewmodelKey);
         view.animate().alpha(1.0f).setStartDelay(1000).setDuration(1200);
     }
 
@@ -86,9 +88,8 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
         boolean isCorrect = viewModel
                 .getCorrect(viewmodelKey)
                 .equals(radioButton.getText().toString());
-        viewModel.retrievePoints(isCorrect,viewModel.qetQuestionDifficulty(viewmodelKey));
+
+        viewModel.retrievePoints(isCorrect, viewModel.qetQuestionDifficulty(viewmodelKey));
         onFragmentInteractionListener.displayResult(isCorrect);
     }
-
-
 }

@@ -3,9 +3,13 @@ package org.pursuit.pursuitjeopardy.view;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -22,6 +26,9 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     private QuestionViewModel viewModel;
     private List<LinearLayout> layoutList;
     private Drawable[] drawables;
+    static final String QUESTION_FRAGMENT_KEY = "question";
+    static final String RESULT_FRAGMENT_KEY = "result";
+    private ViewGroup viewGroup;
 
 
     @Override
@@ -79,24 +86,53 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     @Override
     public void displayQuestion(String key) {
-        inflateFragment(QuestionFragment.newInstance(key), true);
+        Fragment fragment = QuestionFragment.newInstance(key);
+        inflateFragment(fragment, QUESTION_FRAGMENT_KEY, true);
     }
 
     @Override
     public void displayResult(boolean isCorrect) {
-        inflateFragment(ResultFragment.newInstance(isCorrect));
+        Fragment fragment = ResultFragment.newInstance(isCorrect);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Fragment destroyFragment = fragmentManager.findFragmentByTag(QUESTION_FRAGMENT_KEY);
+
+        if (destroyFragment != null) {
+            fragmentManager.beginTransaction().remove(destroyFragment).commit();
+        }
+        inflateFragment(fragment, RESULT_FRAGMENT_KEY, true);
+
     }
 
-    private void inflateFragment(Fragment fragment) {
-        inflateFragment(fragment, false);
+    @Override
+    public void checkTileIsAnswered(boolean isAnswered, String checkKey) {
+        CardView cardview = viewGroup.findViewWithTag(checkKey);
+        Log.d("cardview", cardview.getTag().toString());
+
+        if (!isAnswered) {
+            cardview.setEnabled(true);
+            cardview.setBackgroundColor(cardview.getResources().getColor(
+                    R.color.cardview_color));
+            cardview.setAlpha(1.0f);
+        } else {
+            cardview.setEnabled(false);
+            cardview.setBackgroundColor(cardview.getResources().getColor(
+                    R.color.cardview_was_already_previously_selected_already_color));
+            cardview.setAlpha(.4f);
+        }
     }
 
-    private void inflateFragment(Fragment fragment, boolean addToBack) {
+    private void inflateFragment(Fragment fragment, String fragmentKey) {
+        inflateFragment(fragment, fragmentKey, false);
+    }
+
+    private void inflateFragment(Fragment fragment, String fragmentKey, boolean addToBack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment);
+                .replace(R.id.fragment_container, fragment, fragmentKey);
         if (addToBack) fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
 
 }

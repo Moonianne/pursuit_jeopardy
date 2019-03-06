@@ -34,6 +34,9 @@ public class Animations {
             public void onAnimationStart(Animation animation) {
                 cardview.setElevation(1000000000);
                 linearLayout.setElevation(999999998);
+                cardview.setEnabled(false);
+
+
             }
 
             @Override
@@ -59,11 +62,10 @@ public class Animations {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        cardview.setOnClickListener(null);
-                        cardview.clearAnimation();
+                        cardview.setEnabled(true);
                         cardview.setBackgroundColor(cardview.getResources().getColor(
-                                R.color.cardview_was_already_previously_selected_already_color));
-                        cardview.setAlpha(.4f);
+                                R.color.cardview_color));
+                        cardview.setAlpha(1.0f);
                     }
 
                     @Override
