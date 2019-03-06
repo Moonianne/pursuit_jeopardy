@@ -70,10 +70,6 @@ public class GameBoardActivity extends AppCompatActivity implements OnFragmentIn
     }
 
     @Override
-    public void startBoard() {
-    }
-
-    @Override
     public void displayQuestion(String key) {
         inflateFragment(QuestionFragment.newInstance(key), true);
     }
