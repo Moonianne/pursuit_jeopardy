@@ -26,10 +26,9 @@ import retrofit2.Response;
 public class QuestionsRepository {
     private static QuestionsRepository repositorySingleInstance;
 
-    private List<List<QuestionsModel>> lists;
     private MutableLiveData<List<List<QuestionsModel>>> liveData;
+    private List<List<QuestionsModel>> lists;
     private Map questionsMap;
-
 
     private QuestionsRepository() {
         setList();
@@ -48,7 +47,7 @@ public class QuestionsRepository {
     private void setList() {
         this.liveData = new MutableLiveData<>();
         this.lists = new ArrayList<>();
-        this.questionsMap = new HashMap<String,QuestionsModel>();
+        this.questionsMap = new HashMap<String, QuestionsModel>();
     }
 
     private void populateAllCategories() {
@@ -98,7 +97,7 @@ public class QuestionsRepository {
             if (questionsModels.get(i).getDifficulty().equals("hard")) {
                 questionsModelListWith3Questions.add(2, questionsModels.get(i));
             }
-            questionsMap.put(questionsModels.get(i).getCategory()+i,questionsModels.get(i));
+            questionsMap.put(questionsModels.get(i).getCategory() + i, questionsModels.get(i));
         }
         //TODO: separate this method to storeMethod
         lists.add(questionsModelListWith3Questions);
@@ -109,10 +108,9 @@ public class QuestionsRepository {
         return liveData;
     }
 
-    public Map<String,QuestionsModel> getQuestionsMap(){
+    public Map<String, QuestionsModel> getQuestionsMap() {
         return questionsMap;
     }
-
 
 
 }
