@@ -3,6 +3,7 @@ package org.pursuit.pursuitjeopardy.viewModel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.util.Log;
 
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 import org.pursuit.pursuitjeopardy.repository.QuestionsRepository;
@@ -17,6 +18,7 @@ import java.util.Random;
 
 
 public final class QuestionViewModel extends ViewModel {
+    private static final String TAG = "org.pursuit.viewModel";
     private QuestionsRepository questionsRepository;
     private LiveData<List<List<QuestionsModel>>> listLiveData;
     private Map<String, QuestionsModel> questionMap;
@@ -49,8 +51,9 @@ public final class QuestionViewModel extends ViewModel {
         }
         List<String> answers = questionsModel.getIncorrect_answers();
         String[] result = new String[answers.size()];
-        Collections.shuffle(answers);
         answers.add(questionsModel.getCorrect_answer());
+        Collections.shuffle(answers);
+        Log.d(TAG, "getAnswers: " + Arrays.toString(answers.toArray(result)));
         return answers.toArray(result);
     }
 
@@ -72,6 +75,6 @@ public final class QuestionViewModel extends ViewModel {
                     return 0;
             }
         }
-        return 0;
+        return -1;
     }
 }
