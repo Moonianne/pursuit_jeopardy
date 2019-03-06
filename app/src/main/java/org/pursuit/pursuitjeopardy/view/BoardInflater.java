@@ -50,11 +50,37 @@ public class BoardInflater {
     }
 
     public void populateLayout() {
+        TextView category = createTextView();
+        linearLayout.addView(category);
+        createCardViews();
+    }
+
+    private void createCardViews() {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 1.0f);
         layoutParams.setMargins(16, 16, 16, 16);
+
+        for (int i = 0; i < 3; i++) {
+            final CardView pointsTileCardView =(CardView) LayoutInflater
+                    .from(linearLayout.getContext())
+                    .inflate(R.layout.trivia_itemview,linearLayout,false);
+            pointsTileCardView.getChildAt(0).setBackground(tileAmountDrawables[i]);
+            pointsTileCardView.setClickable(true);
+            pointsTileCardView.setFocusable(true);
+            pointsTileCardView.setBackgroundColor(linearLayout.getResources().getColor(R.color.cardview_color));
+            pointsTileCardView.setLayoutParams(layoutParams);
+            pointsTileCardView.setTag(questionsModels.get(i).getCategory()+i);
+            pointsTileCardView.setOnClickListener(v -> {
+                listener.onTileClicked(v);
+                animations.setAnimations(pointsTileCardView,linearLayout).startAnimation(animations.getClick());
+            });
+            linearLayout.addView(pointsTileCardView);
+        }
+    }
+
+    private TextView createTextView() {
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -74,28 +100,7 @@ public class BoardInflater {
         category.setTextColor(linearLayout.getResources().getColor(R.color.category_color));
         category.setGravity(Gravity.CENTER_VERTICAL);
         category.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-        linearLayout.addView(category);
-
-        for (int i = 0; i < 3; i++) {
-            final CardView pointsTileCardView =(CardView) LayoutInflater
-                    .from(linearLayout.getContext())
-                    .inflate(R.layout.trivia_itemview,linearLayout,false);
-            pointsTileCardView.getChildAt(0).setBackground(tileAmountDrawables[i]);
-            pointsTileCardView.setClickable(true);
-            pointsTileCardView.setFocusable(true);
-            pointsTileCardView.setBackgroundColor(linearLayout.getResources().getColor(R.color.cardview_color));
-            pointsTileCardView.setLayoutParams(layoutParams);
-            pointsTileCardView.setTag(questionsModels.get(i).getCategory()+i);
-            pointsTileCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onTileClicked(v);
-                    animations.setAnimations(pointsTileCardView,linearLayout).startAnimation(animations.getClick());
-                }
-            });
-            linearLayout.addView(pointsTileCardView);
-        }
+        return category;
     }
 
     public interface OnTileClickedListener {
