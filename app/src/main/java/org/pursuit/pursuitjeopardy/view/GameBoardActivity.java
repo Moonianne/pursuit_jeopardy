@@ -37,24 +37,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         setDrawables();
     }
 
-    private void setClipChildren() {
-        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
-                .findViewById(android.R.id.content)).getChildAt(0);
-        viewGroup.setClipChildren(false);
-    }
-
-
-
-    private void setScoreBoard(BoardInflater boardInflater) {
-        scoreKeeper = boardInflater.new ScoreKeeper(scoreBoard);
-        scoreKeeper.setScoreBoard();
-    }
-
-    private void updatePlayerPoints(boolean isCorrect, String QuestionKey) {
-        viewModel.addToPlayerScore(
-                viewModel.pointsAllocator(isCorrect, viewModel.qetQuestionDifficulty(QuestionKey)));
-    }
-
     private void findAndLoadLayout() {
         scoreBoard = findViewById(R.id.score_board);
         LinearLayout category1 = findViewById(R.id.category1);
@@ -70,6 +52,22 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         layoutList.add(category5);
     }
 
+    private void setClipChildren() {
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        viewGroup.setClipChildren(false);
+    }
+
+
+    private void setScoreBoard(BoardInflater boardInflater) {
+        scoreKeeper = boardInflater.new ScoreKeeper(scoreBoard);
+        scoreKeeper.setScoreBoard();
+    }
+
+    private void updatePlayerPoints(boolean isCorrect, String QuestionKey) {
+        viewModel.addToPlayerScore(
+                viewModel.pointsAllocator(isCorrect, viewModel.qetQuestionDifficulty(QuestionKey)));
+    }
 
     private void setViewModel() {
         viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
