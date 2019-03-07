@@ -7,5 +7,9 @@ public interface OnFragmentInteractionListener {
 
     void displayResult(boolean isCorrect);
 
-    void checkTileIsAnswered(boolean isAnswered, String key);
+    void communicateQuestionStatus(boolean answered,String tag);
+//
+//    void verifyTileIsAnswered(String tag);
+//
+//    void markTileIsUnanswered(String tag);
 }

@@ -20,11 +20,10 @@ public class Animations {
         this.context = context;
         click = AnimationUtils.loadAnimation(context, R.anim.tile_click);
         expand = AnimationUtils.loadAnimation(context, R.anim.tile_expand);
-
     }
 
     public CardView setAnimations(final CardView cardview, final LinearLayout linearLayout){
-
+        cardview.setEnabled(false);
         cardview.setAnimation(click);
         linearLayout.setClipChildren(false);
 
@@ -34,9 +33,6 @@ public class Animations {
             public void onAnimationStart(Animation animation) {
                 cardview.setElevation(1000000000);
                 linearLayout.setElevation(999999998);
-                cardview.setEnabled(false);
-
-
             }
 
             @Override
@@ -62,10 +58,8 @@ public class Animations {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        cardview.setEnabled(true);
-                        cardview.setBackgroundColor(cardview.getResources().getColor(
-                                R.color.cardview_color));
-                        cardview.setAlpha(1.0f);
+//                        cardview.setAlpha(1.0f);
+//                        cardview.clearAnimation();
                     }
 
                     @Override

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void startBoard() {
-        startActivity(new Intent(this, GameBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        startActivityForResult(new Intent(this, GameBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP),17);
         finish();
     }
 
