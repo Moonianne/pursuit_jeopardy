@@ -31,14 +31,31 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
+        setClipChildren();
+        findAndLoadLayout();
+        setViewModel();
+        setDrawables();
+    }
+
+    private void setClipChildren() {
         final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
         viewGroup.setClipChildren(false);
-        findAndLoadLayout();
-        setViewModel();
-        drawables = new Drawable[]{getResources().getDrawable(R.drawable.n200),
-                getResources().getDrawable(R.drawable.n400),
-                getResources().getDrawable(R.drawable.n600)};
+    }
+
+    private void findAndLoadLayout() {
+        scoreBoard = findViewById(R.id.score_board);
+        LinearLayout category1 = findViewById(R.id.category1);
+        LinearLayout category2 = findViewById(R.id.category2);
+        LinearLayout category3 = findViewById(R.id.category3);
+        LinearLayout category4 = findViewById(R.id.category4);
+        LinearLayout category5 = findViewById(R.id.category5);
+        layoutList = new ArrayList<>();
+        layoutList.add(category1);
+        layoutList.add(category2);
+        layoutList.add(category3);
+        layoutList.add(category4);
+        layoutList.add(category5);
     }
 
     private void setScoreBoard(BoardInflater boardInflater) {
@@ -74,19 +91,10 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         });
     }
 
-    private void findAndLoadLayout() {
-        scoreBoard = findViewById(R.id.score_board);
-        LinearLayout category1 = findViewById(R.id.category1);
-        LinearLayout category2 = findViewById(R.id.category2);
-        LinearLayout category3 = findViewById(R.id.category3);
-        LinearLayout category4 = findViewById(R.id.category4);
-        LinearLayout category5 = findViewById(R.id.category5);
-        layoutList = new ArrayList<>();
-        layoutList.add(category1);
-        layoutList.add(category2);
-        layoutList.add(category3);
-        layoutList.add(category4);
-        layoutList.add(category5);
+    private void setDrawables() {
+        drawables = new Drawable[]{getResources().getDrawable(R.drawable.n200),
+                getResources().getDrawable(R.drawable.n400),
+                getResources().getDrawable(R.drawable.n600)};
     }
 
     @Override
