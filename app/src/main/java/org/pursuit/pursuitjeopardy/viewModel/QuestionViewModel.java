@@ -4,6 +4,7 @@ package org.pursuit.pursuitjeopardy.viewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import org.pursuit.pursuitjeopardy.model.PlayerModel;
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 import org.pursuit.pursuitjeopardy.repository.QuestionsRepository;
 
@@ -17,14 +18,17 @@ import java.util.Random;
 
 
 public final class QuestionViewModel extends ViewModel {
+
     private QuestionsRepository questionsRepository;
     private LiveData<List<List<QuestionsModel>>> listLiveData;
     private Map<String, QuestionsModel> questionMap;
+    private PlayerModel player;
 
     public QuestionViewModel() {
         questionsRepository = QuestionsRepository.getRepositorySingleInstance();
         listLiveData = questionsRepository.getLiveData();
         questionMap = questionsRepository.getQuestionsMap();
+        player = questionsRepository.setPlayer();
     }
 
     public LiveData<List<List<QuestionsModel>>> getListLiveData() {
@@ -59,7 +63,11 @@ public final class QuestionViewModel extends ViewModel {
         return questionsModel.getCorrect_answer();
     }
 
-    public int retrievePoints(boolean isCorrect, String questionDifficulty) {
+    public void addToPlayerScore(int points){
+        player.setCurrentScore(player.getCurrentScore() + points);
+    }
+
+    public int pointsAllocator(boolean isCorrect, String questionDifficulty) {
         if (isCorrect) {
             switch (questionDifficulty) {
                 case "easy":
@@ -73,5 +81,8 @@ public final class QuestionViewModel extends ViewModel {
             }
         }
         return 0;
+    }
+    public int retrievePlayerCurrentPoints(){
+        return player.getCurrentScore();
     }
 }
