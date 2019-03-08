@@ -1,5 +1,6 @@
 package org.pursuit.pursuitjeopardy.view;
 
+
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -8,9 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
+import org.pursuit.pursuitjeopardy.viewModel.PlayerViewModel;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 
@@ -19,13 +22,13 @@ import java.util.List;
 
 
 public final class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-    private QuestionViewModel viewModel;
-    private List<LinearLayout> layoutList;
-    private LinearLayout scoreBoard;
-    private Drawable[] drawables;
-    private BoardInflater.ScoreKeeper scoreKeeper;
-    private String currentQuestionKey;
 
+    private QuestionViewModel questionViewModel;
+    private PlayerViewModel playerViewModel;
+    private List<LinearLayout> layoutList;
+    private Drawable[] drawables;
+    private TextView playerName;
+    private TextView playerPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +36,14 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         setContentView(R.layout.activity_game_board);
         setClipChildren();
         findAndLoadLayout();
-        setViewModel();
+        setQuestionViewModel();
+        setPlayerModel();
         setDrawables();
     }
 
     private void findAndLoadLayout() {
-        scoreBoard = findViewById(R.id.score_board);
+        playerName = findViewById(R.id.name_text_view);
+        playerPoints = findViewById(R.id.points_text_view);
         LinearLayout category1 = findViewById(R.id.category1);
         LinearLayout category2 = findViewById(R.id.category2);
         LinearLayout category3 = findViewById(R.id.category3);
@@ -58,19 +63,9 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         viewGroup.setClipChildren(false);
     }
 
-    private void setScoreBoard(BoardInflater boardInflater) {
-        scoreKeeper = boardInflater.new ScoreKeeper(scoreBoard);
-        scoreKeeper.setScoreBoard();
-    }
-
-    private void updatePlayerPoints(boolean isCorrect, String QuestionKey) {
-        viewModel.addToPlayerScore(
-                viewModel.pointsAllocator(isCorrect, viewModel.qetQuestionDifficulty(QuestionKey)));
-    }
-
-    private void setViewModel() {
-        viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-        viewModel.getListLiveData().observe(this, lists -> {
+    private void setQuestionViewModel() {
+        questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
+        questionViewModel.getListLiveData().observe(this, lists -> {
             assert lists != null;
             if (lists.size() == 5) {
                 for (int i = 0; i < lists.size(); i++) {
@@ -80,13 +75,14 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
                         String questionKey = (String) view.getTag();
                         displayQuestion(questionKey);
                     });
-
-                    if (i == 4) {
-                        setScoreBoard(boardInflater);
-                    }
                 }
             }
         });
+    }
+
+    private void setPlayerModel() {
+        playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel.class);
+        playerViewModel.getPlayerPoints().observe(this, integer -> playerPoints.setText("Points: " + integer));
     }
 
     private void setDrawables() {
@@ -97,15 +93,14 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     @Override
     public void displayQuestion(String key) {
-        currentQuestionKey = key;
+        questionViewModel.setCurrentQuestionKey(key);
         inflateFragment(QuestionFragment.newInstance(key), true);
     }
 
     @Override
     public void displayResult(boolean isCorrect) {
-        updatePlayerPoints(isCorrect,currentQuestionKey);
-        scoreKeeper.updatePoints(viewModel.retrievePlayerCurrentPoints());
         inflateFragment(ResultFragment.newInstance(isCorrect));
+        playerViewModel.updateToPlayerScore(questionViewModel.pointsAllocator(isCorrect));
     }
 
     private void inflateFragment(Fragment fragment) {

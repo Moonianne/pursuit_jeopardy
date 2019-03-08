@@ -111,36 +111,4 @@ public class BoardInflater {
         this.listener = listener;
     }
 
-
-    class ScoreKeeper {
-
-        private LinearLayout scoreBoard;
-        private TextView name;
-        private TextView points;
-        private int currentPoints;
-
-        public ScoreKeeper(LinearLayout scoreBoard) {
-            this.scoreBoard = scoreBoard;
-        }
-
-        public void setScoreBoard() {
-            name = createTextView();
-            points = createTextView();
-
-            name.setGravity(Gravity.START);
-            points.setGravity(Gravity.END);
-
-            name.setText("Name");
-            points.setText("Points: " + currentPoints);
-
-            scoreBoard.addView(name);
-            scoreBoard.addView(points);
-        }
-
-        public void updatePoints(int newPoints){
-            points.setText("Points: " + newPoints);
-        }
-
-
-    }
 }

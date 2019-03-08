@@ -25,13 +25,12 @@ public final class QuestionViewModel extends ViewModel {
     private QuestionsRepository questionsRepository;
     private LiveData<List<List<QuestionsModel>>> listLiveData;
     private Map<String, QuestionsModel> questionMap;
-    private PlayerModel player;
+    private String currentKey;
 
     public QuestionViewModel() {
         questionsRepository = QuestionsRepository.getRepositorySingleInstance();
         listLiveData = questionsRepository.getLiveData();
         questionMap = questionsRepository.getQuestionsMap();
-        player = questionsRepository.setPlayer();
     }
 
     public LiveData<List<List<QuestionsModel>>> getListLiveData() {
@@ -46,7 +45,7 @@ public final class QuestionViewModel extends ViewModel {
         return questionMap.get(key).getQuestion();
     }
 
-    public String qetQuestionDifficulty(String key){ return questionMap.get(key).getDifficulty();}
+    public String getQuestionDifficulty(String key){ return questionMap.get(key).getDifficulty();}
 
     public String[] getAnswers(String key) {
         QuestionsModel questionsModel = questionMap.get(key);
@@ -67,13 +66,9 @@ public final class QuestionViewModel extends ViewModel {
         return questionsModel.getCorrect_answer();
     }
 
-    public void addToPlayerScore(int points){
-        player.setCurrentScore(player.getCurrentScore() + points);
-    }
-
-    public int pointsAllocator(boolean isCorrect, String questionDifficulty) {
+    public int pointsAllocator(boolean isCorrect) {
         if (isCorrect) {
-            switch (questionDifficulty) {
+            switch (questionMap.get(currentKey).getDifficulty()) {
                 case "easy":
                     return 200;
                 case "medium":
@@ -86,7 +81,12 @@ public final class QuestionViewModel extends ViewModel {
         }
         return -1;
     }
-    public int retrievePlayerCurrentPoints(){
-        return player.getCurrentScore();
+
+    public void setCurrentQuestionKey(String key){
+        currentKey = key;
+    }
+
+    public String getCurrentQuestionKey(){
+        return currentKey;
     }
 }
