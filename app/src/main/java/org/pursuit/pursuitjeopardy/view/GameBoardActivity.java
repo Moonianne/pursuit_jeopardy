@@ -109,24 +109,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     }
 
-    @Override
-    public void checkTileIsAnswered(boolean isAnswered, String checkKey) {
-        CardView cardview = viewGroup.findViewWithTag(checkKey);
-        Log.d("cardview", cardview.getTag().toString());
-
-        if (!isAnswered) {
-            cardview.setEnabled(true);
-            cardview.setBackgroundColor(cardview.getResources().getColor(
-                    R.color.cardview_color));
-            cardview.setAlpha(1.0f);
-        } else {
-
-            Fragment destroyFragment = fragmentManager.findFragmentByTag(QUESTION_FRAGMENT_TAG);
-            if (destroyFragment != null) {
-                fragmentManager.beginTransaction().remove(destroyFragment).commit();
-            }
-            inflateFragment(fragment, RESULT_FRAGMENT_TAG, true);
-        }
 
         @Override
         public void communicateQuestionStatus ( boolean answered, String tag){
@@ -150,13 +132,14 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         }
 
 
+
         public void markTileIsUnanswered (String tag){
             CardView cardview = viewGroup.findViewWithTag(tag);
             cardview.setEnabled(true);
             Log.d("cardview", cardview.getTag().toString());
             cardview.setBackgroundColor(cardview.getResources().getColor(
                     R.color.cardview_color));
-            cardview.animate().alpha(1.0f).setStartDelay(1000).setDuration(1500);
+            cardview.animate().alpha(1.0f).setStartDelay(800).setDuration(1500);
         }
 
 
@@ -188,4 +171,4 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
             }
         }
     }
-}
+
