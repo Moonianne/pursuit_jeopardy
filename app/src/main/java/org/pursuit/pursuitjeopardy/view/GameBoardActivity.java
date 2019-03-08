@@ -45,7 +45,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     }
 
     private void setClipChildren() {
-        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+        viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
         viewGroup.setClipChildren(false);
     }
@@ -110,67 +110,52 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     }
 
 
-        @Override
-        public void communicateQuestionStatus ( boolean answered, String tag){
-            if (!answered) {
-                markTileIsUnanswered(tag);
-            } else {
-                verifyTileIsAnswered(tag);
-            }
-        }
-
-        public void verifyTileIsAnswered (String tag){
-            CardView cardview = viewGroup.findViewWithTag(tag);
-            if (cardview != null) {
-
-                cardview.setEnabled(false);
-                Log.d("cardviewverify", cardview.getTag().toString());
-                cardview.setBackgroundColor(cardview.getResources().getColor(
-                        R.color.cardview_was_already_previously_selected_already_color));
-                cardview.animate().alpha(1.0f).setStartDelay(1000).setDuration(1500);
-            }
-        }
-
-
-
-        public void markTileIsUnanswered (String tag){
-            CardView cardview = viewGroup.findViewWithTag(tag);
-            cardview.setEnabled(true);
-            Log.d("cardview", cardview.getTag().toString());
-            cardview.setBackgroundColor(cardview.getResources().getColor(
-                    R.color.cardview_color));
-            cardview.animate().alpha(1.0f).setStartDelay(800).setDuration(1500);
-        }
-
-
-        private void inflateFragment (Fragment fragment, String fragmentKey){
-            inflateFragment(fragment, fragmentKey, false);
-        }
-
-        private void inflateFragment (Fragment fragment, String fragmentKey,boolean addToBack){
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment, fragmentKey);
-            if (addToBack) fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
-
-
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data){
-
-            if (requestCode == 17) {
-                if (resultCode == RESULT_OK) {
-                    String viewfinder = data.getStringExtra(QuestionFragment.QUESTION_STATUS_VIEWFINDER);
-                    if (data.getBooleanExtra(QuestionFragment.QUESTION_STATUS_KEY, false)) {
-                        verifyTileIsAnswered(viewfinder);
-                    } else {
-                        markTileIsUnanswered(viewfinder);
-                    }
-                }
-            }
+    @Override
+    public void communicateQuestionStatus(boolean answered, String tag) {
+        if (!answered) {
+            markTileIsUnanswered(tag);
+        } else {
+            verifyTileIsAnswered(tag);
         }
     }
+
+    public void verifyTileIsAnswered(String tag) {
+        CardView cardview = viewGroup.findViewWithTag(tag);
+        if (cardview != null) {
+
+            cardview.setEnabled(false);
+            Log.d("cardviewverify", cardview.getTag().toString());
+            cardview.setBackgroundColor(cardview.getResources().getColor(
+                    R.color.cardview_was_already_previously_selected_already_color));
+            cardview.animate().alpha(1.0f).setStartDelay(1000).setDuration(1500);
+        }
+    }
+
+
+    public void markTileIsUnanswered(String tag) {
+        CardView cardview = viewGroup.findViewWithTag(tag);
+        cardview.setEnabled(true);
+        Log.d("cardview", cardview.getTag().toString());
+        cardview.setBackgroundColor(cardview.getResources().getColor(
+                R.color.cardview_color));
+        cardview.animate().alpha(1.0f).setStartDelay(800).setDuration(1500);
+    }
+
+
+    private void inflateFragment(Fragment fragment, String fragmentKey) {
+        inflateFragment(fragment, fragmentKey, false);
+    }
+
+    private void inflateFragment(Fragment fragment, String fragmentKey, boolean addToBack) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment, fragmentKey);
+        if (addToBack) fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+
+}
 
 
 
