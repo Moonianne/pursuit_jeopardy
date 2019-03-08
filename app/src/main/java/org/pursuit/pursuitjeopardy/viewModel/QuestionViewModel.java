@@ -79,7 +79,7 @@ public final class QuestionViewModel extends ViewModel {
                     return 0;
             }
         }
-        return -1;
+        return 0;
     }
 
     public void setCurrentQuestionKey(String key){
