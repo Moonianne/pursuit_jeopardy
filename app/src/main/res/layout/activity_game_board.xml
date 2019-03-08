@@ -8,7 +8,11 @@
     android:background="@color/gameboard_color"
     tools:context=".view.GameBoardActivity">
 
+<<<<<<< HEAD
     <android.support.constraint.ConstraintLayout
+=======
+    <LinearLayout
+>>>>>>> e358a958667f5ca60ec98be5df718409f8dbd75f
         android:id="@+id/score_board"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -18,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+<<<<<<< HEAD
         <TextView
             android:id="@+id/name_text_view"
             android:layout_width="wrap_content"
@@ -55,6 +60,18 @@
         app:layout_constraintTop_toBottomOf="@id/score_board">
 
 
+=======
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/category_container"
+        app:layout_constraintTop_toBottomOf="@id/score_board"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+
+
+>>>>>>> e358a958667f5ca60ec98be5df718409f8dbd75f
         <LinearLayout
             android:id="@+id/category1"
             android:layout_width="0dp"

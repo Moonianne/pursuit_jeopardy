@@ -30,6 +30,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     private TextView playerName;
     private TextView playerPoints;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
                         String questionKey = (String) view.getTag();
                         displayQuestion(questionKey);
                     });
+
                 }
             }
         });
