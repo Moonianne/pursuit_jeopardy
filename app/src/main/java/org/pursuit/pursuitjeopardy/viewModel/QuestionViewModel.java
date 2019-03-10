@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
+import org.pursuit.pursuitjeopardy.model.PlayerModel;
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 import org.pursuit.pursuitjeopardy.repository.QuestionsRepository;
 
@@ -18,10 +19,13 @@ import java.util.Random;
 
 
 public final class QuestionViewModel extends ViewModel {
+
     private static final String TAG = "org.pursuit.viewModel";
+
     private QuestionsRepository questionsRepository;
     private LiveData<List<List<QuestionsModel>>> listLiveData;
     private Map<String, QuestionsModel> questionMap;
+    private String currentKey;
 
     public QuestionViewModel() {
         questionsRepository = QuestionsRepository.getRepositorySingleInstance();
@@ -41,7 +45,7 @@ public final class QuestionViewModel extends ViewModel {
         return questionMap.get(key).getQuestion();
     }
 
-    public String qetQuestionDifficulty(String key){ return questionMap.get(key).getDifficulty();}
+    public String getQuestionDifficulty(String key){ return questionMap.get(key).getDifficulty();}
 
     public String[] getAnswers(String key) {
         QuestionsModel questionsModel = questionMap.get(key);
@@ -62,9 +66,9 @@ public final class QuestionViewModel extends ViewModel {
         return questionsModel.getCorrect_answer();
     }
 
-    public int retrievePoints(boolean isCorrect, String questionDifficulty) {
+    public int pointsAllocator(boolean isCorrect) {
         if (isCorrect) {
-            switch (questionDifficulty) {
+            switch (questionMap.get(currentKey).getDifficulty()) {
                 case "easy":
                     return 200;
                 case "medium":
@@ -75,6 +79,17 @@ public final class QuestionViewModel extends ViewModel {
                     return 0;
             }
         }
-        return -1;
+        return 0;
     }
+
+    public void setCurrentQuestionKey(String key){
+        currentKey = key;
+    }
+
+    public String getCurrentQuestionKey(){
+        return currentKey;
+    }
+
+
+
 }
