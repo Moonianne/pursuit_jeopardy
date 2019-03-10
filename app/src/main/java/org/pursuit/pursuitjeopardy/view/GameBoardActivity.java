@@ -37,10 +37,8 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     static final String QUESTION_FRAGMENT_TAG = "question";
     static final String RESULT_FRAGMENT_TAG = "result";
     private ViewGroup viewGroup;
-    private TextView playerName;
+    private TextView playerName; //TODO: implement use
     private TextView playerPoints;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +73,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         layoutList.add(category5);
     }
 
-    private void setClipChildren() {
-        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
-                .findViewById(android.R.id.content)).getChildAt(0);
-        viewGroup.setClipChildren(false);
-    }
-
     private void setQuestionViewModel() {
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
         questionViewModel.getListLiveData().observe(this, lists -> {
@@ -112,23 +104,25 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     @Override
     public void displayQuestion(String key) {
+        questionViewModel.setCurrentQuestionKey(key);
         inflateFragment(
-          QuestionFragment.newInstance(key),
-          QUESTION_FRAGMENT_TAG, true);
+                QuestionFragment.newInstance(key),
+                QUESTION_FRAGMENT_TAG, true);
     }
 
     @Override
     public void displayResult(boolean isCorrect) {
-        Fragment fragment = ResultFragment.newInstance(isCorrect);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment destroyFragment = fragmentManager.findFragmentByTag(QUESTION_FRAGMENT_TAG);
-        if (destroyFragment != null) {
-            fragmentManager.beginTransaction().remove(destroyFragment).commit();
-        }
+        Fragment destroyFragment = getSupportFragmentManager().findFragmentByTag(QUESTION_FRAGMENT_TAG);
+        removeQuestionView(destroyFragment);
         inflateFragment(ResultFragment.newInstance(isCorrect), RESULT_FRAGMENT_TAG, true);
         playerViewModel.updateToPlayerScore(questionViewModel.pointsAllocator(isCorrect));
     }
 
+    private void removeQuestionView(Fragment destroyFragment) {
+        if (destroyFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(destroyFragment).commit();
+        }
+    }
 
     @Override
     public void communicateQuestionStatus(boolean answered, String tag) {
@@ -142,7 +136,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     public void verifyTileIsAnswered(String tag) {
         CardView cardview = viewGroup.findViewWithTag(tag);
         if (cardview != null) {
-
             cardview.setEnabled(false);
             Log.d("cardviewverify", cardview.getTag().toString());
             cardview.setBackgroundColor(cardview.getResources().getColor(
@@ -150,7 +143,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
             cardview.animate().alpha(1.0f).setStartDelay(1000).setDuration(1500);
         }
     }
-
 
     public void markTileIsUnanswered(String tag) {
         CardView cardview = viewGroup.findViewWithTag(tag);
@@ -161,21 +153,16 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         cardview.animate().alpha(1.0f).setStartDelay(800).setDuration(1500);
     }
 
-
     private void inflateFragment(Fragment fragment, String fragmentKey) {
         inflateFragment(fragment, fragmentKey, false);
     }
 
-    private void inflateFragment(Fragment fragment, String fragmentKey, boolean addToBack) {
+    private void inflateFragment(Fragment fragment, String fragmentTag, boolean addToBack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, fragment, fragmentKey);
+                .replace(R.id.fragment_container, fragment, fragmentTag);
         if (addToBack) fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
-
 }
-
-
-
