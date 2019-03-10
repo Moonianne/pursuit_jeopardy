@@ -1,27 +1,14 @@
 package org.pursuit.pursuitjeopardy.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.CardView;
-import android.text.Layout;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +16,6 @@ import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.v4.widget.TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration;
@@ -40,13 +26,11 @@ public class BoardInflater {
     private List<QuestionsModel> questionsModels;
     private OnTileClickedListener listener;
     private Drawable[] tileAmountDrawables;
-    private Animations animations;
 
     public BoardInflater(LinearLayout linearLayout, List<QuestionsModel> questionsModels, Drawable[] tileAmountDrawables) {
         this.linearLayout = linearLayout;
         this.questionsModels = questionsModels;
         this.tileAmountDrawables = tileAmountDrawables;
-        this.animations = new Animations(linearLayout.getContext());
     }
 
     public void populateLayout() {
@@ -74,7 +58,9 @@ public class BoardInflater {
             pointsTileCardView.setTag(questionsModels.get(i).getCategory() + i);
             pointsTileCardView.setOnClickListener(v -> {
                 listener.onTileClicked(v);
-                animations.setAnimations(pointsTileCardView, linearLayout).startAnimation(animations.getClick());
+                Animations.setTileAnimationsAtBoardInflation(
+                        pointsTileCardView, linearLayout);
+
             });
             linearLayout.addView(pointsTileCardView);
         }
