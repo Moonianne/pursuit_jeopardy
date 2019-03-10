@@ -1,8 +1,5 @@
 package org.pursuit.pursuitjeopardy;
 
-import android.animation.Animator;
-import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -71,7 +68,7 @@ public class Animations {
     public static void tileUnansweredAnimate(View v){
         v.setBackgroundColor(v.getResources().getColor(
                 R.color.cardview_color));
-        v.animate().alpha(1.0f).setStartDelay(800).setDuration(1500);
+        v.animate().alpha(1.0f).setStartDelay(400).setDuration(1000);
     }
 
     public static void launchedQuestionFragmentAnimate(View v){

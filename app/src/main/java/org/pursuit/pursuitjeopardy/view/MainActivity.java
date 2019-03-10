@@ -25,12 +25,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationStart(Animation animation) {
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 startBoard();
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }

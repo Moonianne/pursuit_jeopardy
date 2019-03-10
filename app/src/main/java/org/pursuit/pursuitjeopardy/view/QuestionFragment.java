@@ -1,10 +1,7 @@
 package org.pursuit.pursuitjeopardy.view;
 
-
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -93,7 +90,6 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
                 .getCorrect(viewmodelKey)
                 .equals(radioButton.getText().toString());
         onFragmentInteractionListener.displayResult(isCorrect);
-
     }
 
     @Override
