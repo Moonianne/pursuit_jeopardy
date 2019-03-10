@@ -1,8 +1,10 @@
 package org.pursuit.pursuitjeopardy.view;
 
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,13 +23,16 @@ import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 public final class QuestionFragment extends Fragment implements View.OnClickListener {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
-
+    public static final String QUESTION_STATUS_KEY = "org.pursuit.pursuitjeopardy.QUESTION_STATUS";
+    public static final String QUESTION_STATUS_VIEWFINDER = "org.pursuit.pursuitjeopardy.QUESTION_STATUS_VIEWFINDER";
+    private boolean questionWasAnswered;
     private OnFragmentInteractionListener onFragmentInteractionListener;
     private QuestionViewModel viewModel;
     private RadioGroup answerRadioGroup;
     private TextView questionView;
     private Button submitButton;
     private String viewmodelKey;
+
 
     @Override
     public void onAttach(Context context) {
@@ -70,7 +75,7 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
         submitButton = view.findViewById(R.id.button_submit);
         submitButton.setOnClickListener(this);
         questionView.setText(viewModel.getQuestion(viewmodelKey));
-
+        questionWasAnswered = false;
         String[] ab = viewModel.getAnswers(viewmodelKey);
         for (int i = 0; i < ab.length; i++) {
             RadioButton radioButtonView = new RadioButton(view.getContext());
@@ -82,10 +87,20 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        questionWasAnswered = true;
         RadioButton radioButton = answerRadioGroup.findViewById(answerRadioGroup.getCheckedRadioButtonId());
         boolean isCorrect = viewModel
                 .getCorrect(viewmodelKey)
                 .equals(radioButton.getText().toString());
+        viewModel.retrievePoints(isCorrect, viewModel.qetQuestionDifficulty(viewmodelKey));
         onFragmentInteractionListener.displayResult(isCorrect);
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        onFragmentInteractionListener.communicateQuestionStatus(questionWasAnswered,viewmodelKey);
+
     }
 }
