@@ -42,7 +42,7 @@ public class BoardInflater {
     private Drawable[] tileAmountDrawables;
     private Animations animations;
 
-    public BoardInflater(LinearLayout linearLayout, List<QuestionsModel> questionsModels,Drawable[] tileAmountDrawables) {
+    public BoardInflater(LinearLayout linearLayout, List<QuestionsModel> questionsModels, Drawable[] tileAmountDrawables) {
         this.linearLayout = linearLayout;
         this.questionsModels = questionsModels;
         this.tileAmountDrawables = tileAmountDrawables;
@@ -63,18 +63,18 @@ public class BoardInflater {
         layoutParams.setMargins(16, 16, 16, 16);
 
         for (int i = 0; i < 3; i++) {
-            final CardView pointsTileCardView =(CardView) LayoutInflater
+            final CardView pointsTileCardView = (CardView) LayoutInflater
                     .from(linearLayout.getContext())
-                    .inflate(R.layout.trivia_itemview,linearLayout,false);
+                    .inflate(R.layout.trivia_itemview, linearLayout, false);
             pointsTileCardView.getChildAt(0).setBackground(tileAmountDrawables[i]);
             pointsTileCardView.setClickable(true);
             pointsTileCardView.setFocusable(true);
             pointsTileCardView.setBackgroundColor(linearLayout.getResources().getColor(R.color.cardview_color));
             pointsTileCardView.setLayoutParams(layoutParams);
-            pointsTileCardView.setTag(questionsModels.get(i).getCategory()+i);
+            pointsTileCardView.setTag(questionsModels.get(i).getCategory() + i);
             pointsTileCardView.setOnClickListener(v -> {
                 listener.onTileClicked(v);
-                animations.setAnimations(pointsTileCardView,linearLayout).startAnimation(animations.getClick());
+                animations.setAnimations(pointsTileCardView, linearLayout).startAnimation(animations.getClick());
             });
             linearLayout.addView(pointsTileCardView);
         }
@@ -87,13 +87,13 @@ public class BoardInflater {
                 1.2f);
         TextView category = new TextView(linearLayout.getContext());
         category.setLayoutParams(textParams);
-        category.setPadding(8,8,8,8);
+        category.setPadding(8, 8, 8, 8);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             category.setAutoSizeTextTypeUniformWithConfiguration(
                     1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
-        }else{
+        } else {
             TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
-                    category,1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
+                    category, 1, 17, 1, TypedValue.COMPLEX_UNIT_DIP);
         }
         category.setText(questionsModels.get(0).getCategory());
         category.setTypeface(Typeface.DEFAULT_BOLD);
@@ -110,4 +110,5 @@ public class BoardInflater {
     public void setOnTileSelectedListener(OnTileClickedListener listener) {
         this.listener = listener;
     }
+
 }

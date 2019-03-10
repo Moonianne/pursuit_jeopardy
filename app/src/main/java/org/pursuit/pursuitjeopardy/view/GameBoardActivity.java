@@ -1,5 +1,6 @@
 package org.pursuit.pursuitjeopardy.view;
 
+
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -13,9 +14,11 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
+import org.pursuit.pursuitjeopardy.viewModel.PlayerViewModel;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 
@@ -26,12 +29,17 @@ import retrofit2.http.HEAD;
 
 
 public final class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-    private QuestionViewModel viewModel;
+
+    private QuestionViewModel questionViewModel;
+    private PlayerViewModel playerViewModel;
     private List<LinearLayout> layoutList;
     private Drawable[] drawables;
     static final String QUESTION_FRAGMENT_TAG = "question";
     static final String RESULT_FRAGMENT_TAG = "result";
     private ViewGroup viewGroup;
+    private TextView playerName;
+    private TextView playerPoints;
+
 
 
     @Override
@@ -40,7 +48,8 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         setContentView(R.layout.activity_game_board);
         setClipChildren();
         findAndLoadLayout();
-        setViewModel();
+        setQuestionViewModel();
+        setPlayerModel();
         setDrawables();
     }
 
@@ -51,6 +60,8 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     }
 
     private void findAndLoadLayout() {
+        playerName = findViewById(R.id.name_text_view);
+        playerPoints = findViewById(R.id.points_text_view);
         LinearLayout category1 = findViewById(R.id.category1);
         LinearLayout category2 = findViewById(R.id.category2);
         LinearLayout category3 = findViewById(R.id.category3);
@@ -64,9 +75,15 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         layoutList.add(category5);
     }
 
-    private void setViewModel() {
-        viewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-        viewModel.getListLiveData().observe(this, lists -> {
+    private void setClipChildren() {
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        viewGroup.setClipChildren(false);
+    }
+
+    private void setQuestionViewModel() {
+        questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
+        questionViewModel.getListLiveData().observe(this, lists -> {
             assert lists != null;
             if (lists.size() == 5) {
                 for (int i = 0; i < lists.size(); i++) {
@@ -76,9 +93,15 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
                         String questionKey = (String) view.getTag();
                         displayQuestion(questionKey);
                     });
+
                 }
             }
         });
+    }
+
+    private void setPlayerModel() {
+        playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel.class);
+        playerViewModel.getPlayerPoints().observe(this, integer -> playerPoints.setText("Points: " + integer));
     }
 
     private void setDrawables() {
@@ -89,24 +112,21 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     @Override
     public void displayQuestion(String key) {
-        Fragment fragment = QuestionFragment.newInstance(key);
-        inflateFragment(fragment, QUESTION_FRAGMENT_TAG, true);
-
+        inflateFragment(
+          QuestionFragment.newInstance(key),
+          QUESTION_FRAGMENT_TAG, true);
     }
 
     @Override
     public void displayResult(boolean isCorrect) {
         Fragment fragment = ResultFragment.newInstance(isCorrect);
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-
         Fragment destroyFragment = fragmentManager.findFragmentByTag(QUESTION_FRAGMENT_TAG);
-
         if (destroyFragment != null) {
             fragmentManager.beginTransaction().remove(destroyFragment).commit();
         }
-        inflateFragment(fragment, RESULT_FRAGMENT_TAG, true);
-
+        inflateFragment(ResultFragment.newInstance(isCorrect), RESULT_FRAGMENT_TAG, true);
+        playerViewModel.updateToPlayerScore(questionViewModel.pointsAllocator(isCorrect));
     }
 
 
