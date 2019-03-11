@@ -15,6 +15,7 @@ import android.widget.TextView;
 import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
+import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 import org.pursuit.pursuitjeopardy.viewModel.PlayerViewModel;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
@@ -67,7 +68,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     private void setQuestionViewModel() {
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-        questionViewModel.getListLiveData().observe(this, lists -> {
+        questionViewModel.getListLiveData().observe(this, (List<List<QuestionsModel>> lists) -> {
             assert lists != null;
             if (lists.size() == 5) {
                 for (int i = 0; i < lists.size(); i++) {
@@ -75,6 +76,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
                     boardInflater.populateLayout();
                     boardInflater.setOnTileSelectedListener(view -> {
                         String questionKey = (String) view.getTag();
+                        Log.d("s", questionKey);
                         displayQuestion(questionKey);
                     });
 

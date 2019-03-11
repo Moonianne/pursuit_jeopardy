@@ -70,10 +70,19 @@ public final class QuestionViewModel extends ViewModel {
         if (isCorrect) {
             switch (questionMap.get(currentKey).getDifficulty()) {
                 case "easy":
+                    Log.d("difficulty easy",
+                            questionMap.get(currentKey).getQuestion()
+                                    + " " + questionMap.get(currentKey).getDifficulty() );
                     return 200;
                 case "medium":
+                    Log.d("difficulty med",
+                            questionMap.get(currentKey).getQuestion()
+                                    + " " + questionMap.get(currentKey).getDifficulty() );
                     return 400;
                 case "hard":
+                    Log.d("difficulty hard",
+                            questionMap.get(currentKey).getQuestion()
+                                    + " " + questionMap.get(currentKey).getDifficulty() );
                     return 600;
                 default:
                     return 0;
