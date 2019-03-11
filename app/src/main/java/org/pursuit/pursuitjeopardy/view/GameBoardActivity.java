@@ -76,7 +76,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
                     boardInflater.populateLayout();
                     boardInflater.setOnTileSelectedListener(view -> {
                         String questionKey = (String) view.getTag();
-                        Log.d("s", questionKey);
                         displayQuestion(questionKey);
                     });
 
@@ -131,7 +130,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         CardView cardview = viewGroup.findViewWithTag(tag);
         if (cardview != null) {
             cardview.setEnabled(false);
-            Log.d("cardviewverify", cardview.getTag().toString());
             Animations.tileAnsweredAnimate(cardview);
         }
     }
@@ -139,7 +137,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     public void markTileIsUnanswered(String tag) {
         CardView cardview = viewGroup.findViewWithTag(tag);
         cardview.setEnabled(true);
-        Log.d("cardview", cardview.getTag().toString());
         Animations.tileUnansweredAnimate(cardview);
     }
 
