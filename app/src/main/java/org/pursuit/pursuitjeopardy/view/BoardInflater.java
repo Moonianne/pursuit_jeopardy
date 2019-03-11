@@ -71,7 +71,7 @@ public class BoardInflater {
             pointsTileCardView.setFocusable(true);
             pointsTileCardView.setBackgroundColor(linearLayout.getResources().getColor(R.color.cardview_color));
             pointsTileCardView.setLayoutParams(layoutParams);
-            pointsTileCardView.setTag(questionsModels.get(i).getCategory() + i);
+            pointsTileCardView.setTag(questionsModels.get(i).getCategory() + questionsModels.get(i).getDifficulty());
             pointsTileCardView.setOnClickListener(v -> {
                 listener.onTileClicked(v);
                 animations.setAnimations(pointsTileCardView, linearLayout).startAnimation(animations.getClick());
