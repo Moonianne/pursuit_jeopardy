@@ -37,17 +37,16 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
-        setClipChildren();
         findAndLoadLayout();
         setQuestionViewModel();
         setPlayerModel();
         setDrawables();
+        setViewGroup();
     }
-
-    private void setClipChildren() {
+//clipchildren is set in xml and method now only sets viewgroup - which is needed.
+    private void setViewGroup() {
         viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
-        viewGroup.setClipChildren(false);
     }
 
     private void findAndLoadLayout() {

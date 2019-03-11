@@ -21,8 +21,6 @@ import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 public final class QuestionFragment extends Fragment implements View.OnClickListener {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
-    public static final String QUESTION_STATUS_KEY = "org.pursuit.pursuitjeopardy.QUESTION_STATUS";
-    public static final String QUESTION_STATUS_VIEWFINDER = "org.pursuit.pursuitjeopardy.QUESTION_STATUS_VIEWFINDER";
     private boolean questionWasAnswered;
     private OnFragmentInteractionListener onFragmentInteractionListener;
     private QuestionViewModel viewModel;
