@@ -5,7 +5,7 @@ import android.util.Log;
 
 import org.pursuit.pursuitjeopardy.enums.CategoryEnums;
 import org.pursuit.pursuitjeopardy.enums.DifficultyEnums;
-import org.pursuit.pursuitjeopardy.model.PlayerModel;
+import org.pursuit.pursuitjeopardy.model.Player;
 import org.pursuit.pursuitjeopardy.model.QuestionRequestModel;
 import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 import org.pursuit.pursuitjeopardy.model.TriviaResponseModel;
@@ -47,8 +47,8 @@ public class QuestionsRepository {
         }
     }
 
-    public PlayerModel setPlayer() {
-        return new PlayerModel();
+    public Player setPlayer() {
+        return new Player();
     }
 
     private void setList() {

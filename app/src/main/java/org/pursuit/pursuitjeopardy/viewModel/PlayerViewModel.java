@@ -4,13 +4,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import org.pursuit.pursuitjeopardy.model.PlayerModel;
+import org.pursuit.pursuitjeopardy.model.Player;
 import org.pursuit.pursuitjeopardy.repository.QuestionsRepository;
 
 public final class PlayerViewModel extends ViewModel {
 
     private final QuestionsRepository questionsRepository;
-    private final PlayerModel player;
+    private final Player player;
     private MutableLiveData<Integer> playerPoints;
 
     public PlayerViewModel() {
