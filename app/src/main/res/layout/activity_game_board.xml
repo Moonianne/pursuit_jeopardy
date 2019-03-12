@@ -6,17 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gameboard_color"
-    tools:context=".view.GameBoardActivity">
+    tools:context=".view.GameBoardActivity"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/score_board"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="32dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/category_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <TextView
             android:id="@+id/name_text_view"
@@ -25,7 +30,9 @@
             android:layout_marginStart="16dp"
             android:text="Name: "
             android:textAlignment="center"
+            android:textColor="@color/category_color"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,13 +44,14 @@
             android:layout_marginEnd="16dp"
             android:text="Points: "
             android:textAlignment="center"
+            android:textColor="@color/category_color"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
-
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/category_container"
@@ -52,7 +60,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/score_board">
+        app:layout_constraintTop_toBottomOf="@id/score_board"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:id="@+id/category1"

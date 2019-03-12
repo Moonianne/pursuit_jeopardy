@@ -23,14 +23,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class QuestionsRepository {
     private static QuestionsRepository repositorySingleInstance;
 
     private MutableLiveData<List<List<QuestionsModel>>> liveData;
     private List<List<QuestionsModel>> lists;
     private Map questionsMap;
-
 
     private QuestionsRepository() {
         setPlayer();
@@ -86,26 +84,28 @@ public class QuestionsRepository {
 
                     }
                 });
-
     }
 
     private void parseRetrofitResponseList(List<QuestionsModel> questionsModels) {
         List<QuestionsModel> questionsModelListWith3Questions =
                 new ArrayList<>(Arrays.asList(new QuestionsModel[]{null, null, null}));
-        while (questionsModelListWith3Questions.get(0) == null ||
-                questionsModelListWith3Questions.get(1) == null ||
-                questionsModelListWith3Questions.get(2) == null) {
-            for (int i = 0; i < questionsModels.size(); i++) {
-                if (questionsModels.get(i).getDifficulty().equals("easy")) {
-                    questionsModelListWith3Questions.add(0, questionsModels.get(i));
-                }
-                if (questionsModels.get(i).getDifficulty().equals("medium")) {
-                    questionsModelListWith3Questions.add(1, questionsModels.get(i));
-                }
-                if (questionsModels.get(i).getDifficulty().equals("hard")) {
-                    questionsModelListWith3Questions.add(2, questionsModels.get(i));
-                }
-                questionsMap.put(questionsModels.get(i).getCategory() + i, questionsModels.get(i));
+        for (int i = 0; i < questionsModels.size(); i++) {
+            QuestionsModel currentQuestion = questionsModels.get(i);
+            String questionDifficulty = currentQuestion.getDifficulty();
+
+            if (questionDifficulty.equals("easy") && questionsModelListWith3Questions.get(0) == null) {
+                questionsModelListWith3Questions.add(0, currentQuestion);
+                questionsMap.put(currentQuestion.getCategory() + questionDifficulty, currentQuestion);
+            }
+            if (questionDifficulty.equals("medium") &&
+                    questionsModelListWith3Questions.get(1) == null) {
+                questionsModelListWith3Questions.add(1, currentQuestion);
+                questionsMap.put(currentQuestion.getCategory() + questionDifficulty, currentQuestion);
+            }
+            if (questionDifficulty.equals("hard") &&
+                    questionsModelListWith3Questions.get(2) == null) {
+                questionsModelListWith3Questions.add(2, currentQuestion);
+                questionsMap.put(currentQuestion.getCategory() + questionDifficulty, currentQuestion);
             }
         }
         lists.add(questionsModelListWith3Questions);
@@ -119,6 +119,4 @@ public class QuestionsRepository {
     public Map<String, QuestionsModel> getQuestionsMap() {
         return questionsMap;
     }
-
-
 }

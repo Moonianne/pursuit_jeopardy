@@ -1,14 +1,13 @@
 package org.pursuit.pursuitjeopardy.view;
 
-
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +16,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 public final class QuestionFragment extends Fragment implements View.OnClickListener {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
-    public static final String QUESTION_STATUS_KEY = "org.pursuit.pursuitjeopardy.QUESTION_STATUS";
-    public static final String QUESTION_STATUS_VIEWFINDER = "org.pursuit.pursuitjeopardy.QUESTION_STATUS_VIEWFINDER";
-    private boolean questionWasAnswered;
     private OnFragmentInteractionListener onFragmentInteractionListener;
     private QuestionViewModel viewModel;
     private RadioGroup answerRadioGroup;
@@ -68,38 +65,44 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.setAlpha(0);
-        view.setElevation(999999999);
+
         questionView = view.findViewById(R.id.text_question);
         answerRadioGroup = view.findViewById(R.id.answers_radio);
+        answerRadioGroup.setGravity(Gravity.CENTER);
         submitButton = view.findViewById(R.id.button_submit);
         submitButton.setOnClickListener(this);
         questionView.setText(viewModel.getQuestion(viewmodelKey));
-        questionWasAnswered = false;
         String[] ab = viewModel.getAnswers(viewmodelKey);
+
         for (int i = 0; i < ab.length; i++) {
             RadioButton radioButtonView = new RadioButton(view.getContext());
             radioButtonView.setText(ab[i]);
+//this code was added to tweak design of radio buttons --START
+            radioButtonView.setGravity(Gravity.CENTER);
+            radioButtonView.setWidth(
+                    (int) Math.floor(
+                            ( (view.getRootView().getWidth()) - ( .34 * view.getRootView().getWidth() ) ) / ( ab.length )));
+            radioButtonView.setAutoSizeTextTypeUniformWithConfiguration(10,16,2,1);
+//--END
             answerRadioGroup.addView(radioButtonView, i);
+            Log.d("radio",Integer.toString(answerRadioGroup.getChildCount()));
         }
-        view.animate().alpha(1.0f).setStartDelay(1000).setDuration(1200);
+        Animations.launchedQuestionFragmentAnimate(view);
     }
 
     @Override
     public void onClick(View v) {
-        questionWasAnswered = true;
+        viewModel.setCurrentQuestionAnswered(true);
         RadioButton radioButton = answerRadioGroup.findViewById(answerRadioGroup.getCheckedRadioButtonId());
         boolean isCorrect = viewModel
                 .getCorrect(viewmodelKey)
                 .equals(radioButton.getText().toString());
         onFragmentInteractionListener.displayResult(isCorrect);
-
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        onFragmentInteractionListener.communicateQuestionStatus(questionWasAnswered,viewmodelKey);
-
+        onFragmentInteractionListener.communicateQuestionStatus(viewModel.isCurrentQuestionAnswered(),viewmodelKey);
     }
 }
