@@ -1,10 +1,7 @@
 package org.pursuit.pursuitjeopardy.view;
 
-
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,14 +14,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
 public final class QuestionFragment extends Fragment implements View.OnClickListener {
     private static final String QUESTION_KEY = "org.pursuit.pursuitjeopardy.QUESTION";
-    public static final String QUESTION_STATUS_KEY = "org.pursuit.pursuitjeopardy.QUESTION_STATUS";
-    public static final String QUESTION_STATUS_VIEWFINDER = "org.pursuit.pursuitjeopardy.QUESTION_STATUS_VIEWFINDER";
     private boolean questionWasAnswered;
     private OnFragmentInteractionListener onFragmentInteractionListener;
     private QuestionViewModel viewModel;
@@ -68,8 +64,7 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.setAlpha(0);
-        view.setElevation(999999999);
+
         questionView = view.findViewById(R.id.text_question);
         answerRadioGroup = view.findViewById(R.id.answers_radio);
         submitButton = view.findViewById(R.id.button_submit);
@@ -82,7 +77,7 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
             radioButtonView.setText(ab[i]);
             answerRadioGroup.addView(radioButtonView, i);
         }
-        view.animate().alpha(1.0f).setStartDelay(1000).setDuration(1200);
+        Animations.launchedQuestionFragmentAnimate(view);
     }
 
     @Override
@@ -93,13 +88,11 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
                 .getCorrect(viewmodelKey)
                 .equals(radioButton.getText().toString());
         onFragmentInteractionListener.displayResult(isCorrect);
-
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         onFragmentInteractionListener.communicateQuestionStatus(questionWasAnswered,viewmodelKey);
-
     }
 }

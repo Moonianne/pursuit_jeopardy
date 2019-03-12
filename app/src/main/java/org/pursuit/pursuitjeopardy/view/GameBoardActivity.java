@@ -1,12 +1,8 @@
 package org.pursuit.pursuitjeopardy.view;
 
-
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,17 +12,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 import org.pursuit.pursuitjeopardy.viewModel.PlayerViewModel;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.http.HEAD;
-
 
 public final class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
@@ -44,17 +37,16 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
-        setClipChildren();
         findAndLoadLayout();
         setQuestionViewModel();
         setPlayerModel();
         setDrawables();
+        setViewGroup();
     }
-
-    private void setClipChildren() {
+//clipchildren is set in xml and method now only sets viewgroup - which is needed.
+    private void setViewGroup() {
         viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
-        viewGroup.setClipChildren(false);
     }
 
     private void findAndLoadLayout() {
@@ -138,9 +130,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         if (cardview != null) {
             cardview.setEnabled(false);
             Log.d("cardviewverify", cardview.getTag().toString());
-            cardview.setBackgroundColor(cardview.getResources().getColor(
-                    R.color.cardview_was_already_previously_selected_already_color));
-            cardview.animate().alpha(1.0f).setStartDelay(1000).setDuration(1500);
+            Animations.tileAnsweredAnimate(cardview);
         }
     }
 
@@ -148,9 +138,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         CardView cardview = viewGroup.findViewWithTag(tag);
         cardview.setEnabled(true);
         Log.d("cardview", cardview.getTag().toString());
-        cardview.setBackgroundColor(cardview.getResources().getColor(
-                R.color.cardview_color));
-        cardview.animate().alpha(1.0f).setStartDelay(800).setDuration(1500);
+        Animations.tileUnansweredAnimate(cardview);
     }
 
     private void inflateFragment(Fragment fragment, String fragmentKey) {
@@ -164,5 +152,9 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         if (addToBack) fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-
 }
+
+
+
+
+
