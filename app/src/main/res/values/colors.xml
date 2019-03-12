@@ -7,4 +7,5 @@
     <color name="category_color">#FFF6A9</color>
     <color name="gameboard_color">#7808DA</color>
     <color name="cardview_was_already_previously_selected_already_color">#573179</color>
+    <color name="radio_color">#AE5BAAC9</color>
 </resources>

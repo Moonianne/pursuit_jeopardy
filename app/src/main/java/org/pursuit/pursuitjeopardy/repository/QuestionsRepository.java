@@ -23,14 +23,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class QuestionsRepository {
     private static QuestionsRepository repositorySingleInstance;
 
     private MutableLiveData<List<List<QuestionsModel>>> liveData;
     private List<List<QuestionsModel>> lists;
     private Map questionsMap;
-
 
     private QuestionsRepository() {
         setPlayer();
@@ -86,7 +84,6 @@ public class QuestionsRepository {
 
                     }
                 });
-
     }
 
     private void parseRetrofitResponseList(List<QuestionsModel> questionsModels) {
@@ -122,6 +119,4 @@ public class QuestionsRepository {
     public Map<String, QuestionsModel> getQuestionsMap() {
         return questionsMap;
     }
-
-
 }

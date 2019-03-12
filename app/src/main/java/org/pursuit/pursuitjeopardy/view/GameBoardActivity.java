@@ -15,6 +15,7 @@ import android.widget.TextView;
 import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
+import org.pursuit.pursuitjeopardy.model.QuestionsModel;
 import org.pursuit.pursuitjeopardy.viewModel.PlayerViewModel;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
@@ -67,7 +68,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     private void setQuestionViewModel() {
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-        questionViewModel.getListLiveData().observe(this, lists -> {
+        questionViewModel.getListLiveData().observe(this, (List<List<QuestionsModel>> lists) -> {
             assert lists != null;
             if (lists.size() == 5) {
                 for (int i = 0; i < lists.size(); i++) {
@@ -129,7 +130,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         CardView cardview = viewGroup.findViewWithTag(tag);
         if (cardview != null) {
             cardview.setEnabled(false);
-            Log.d("cardviewverify", cardview.getTag().toString());
             Animations.tileAnsweredAnimate(cardview);
         }
     }
@@ -137,7 +137,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     public void markTileIsUnanswered(String tag) {
         CardView cardview = viewGroup.findViewWithTag(tag);
         cardview.setEnabled(true);
-        Log.d("cardview", cardview.getTag().toString());
         Animations.tileUnansweredAnimate(cardview);
     }
 

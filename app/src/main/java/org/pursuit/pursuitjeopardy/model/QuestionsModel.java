@@ -13,6 +13,7 @@ public class QuestionsModel {
     private String question;
     private String correct_answer;
     private List<String> incorrect_answers;
+    private boolean wasOpened;
 
     public String getCategory() {
         return category;
