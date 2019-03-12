@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,15 +68,24 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
 
         questionView = view.findViewById(R.id.text_question);
         answerRadioGroup = view.findViewById(R.id.answers_radio);
+        answerRadioGroup.setGravity(Gravity.CENTER);
         submitButton = view.findViewById(R.id.button_submit);
         submitButton.setOnClickListener(this);
         questionView.setText(viewModel.getQuestion(viewmodelKey));
-//        viewModel.setCurrentQuestionAnswered(false);
         String[] ab = viewModel.getAnswers(viewmodelKey);
+
         for (int i = 0; i < ab.length; i++) {
             RadioButton radioButtonView = new RadioButton(view.getContext());
             radioButtonView.setText(ab[i]);
+//this code was added to tweak design of radio buttons --START
+            radioButtonView.setGravity(Gravity.CENTER);
+            radioButtonView.setWidth(
+                    (int) Math.floor(
+                            ( (view.getRootView().getWidth()) - ( .34 * view.getRootView().getWidth() ) ) / ( ab.length )));
+            radioButtonView.setAutoSizeTextTypeUniformWithConfiguration(10,16,2,1);
+//--END
             answerRadioGroup.addView(radioButtonView, i);
+            Log.d("radio",Integer.toString(answerRadioGroup.getChildCount()));
         }
         Animations.launchedQuestionFragmentAnimate(view);
     }

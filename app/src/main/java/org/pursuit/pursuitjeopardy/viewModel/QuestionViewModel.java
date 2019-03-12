@@ -49,15 +49,21 @@ public final class QuestionViewModel extends ViewModel {
     public String getQuestionDifficulty(String key){ return questionMap.get(key).getDifficulty();}
 
     public String[] getAnswers(String key) {
+
         QuestionsModel questionsModel = questionMap.get(key);
+
         if (questionsModel.getCorrect_answer().equals("true") ||
                 questionsModel.getCorrect_answer().equals("false")) {
             return new String[]{"True", "False"};
         }
-        List<String> answers = questionsModel.getIncorrect_answers();
-        String[] result = new String[answers.size()];
+
+        List<String> answers = new ArrayList<>(questionsModel.getIncorrect_answers());
         answers.add(questionsModel.getCorrect_answer());
+
         Collections.shuffle(answers);
+
+        String[] result = new String[answers.size()];
+        Log.d(TAG, "resultarr" + result.length + " " + "answersarr" + answers.size());
         Log.d(TAG, "getAnswers: " + Arrays.toString(answers.toArray(result)));
         return answers.toArray(result);
     }
