@@ -97,7 +97,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         questionViewModel.setCurrentQuestionKey(key);
         inflateFragment(
                 QuestionFragment.newInstance(key),
-                OnFragmentInteractionListener.QUESTION_FRAGMENT_TAG, true);
+                QUESTION_FRAGMENT_TAG, true);
     }
 
     @Override
@@ -105,19 +105,19 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         removeQuestionFragment();
         inflateFragment(
                 ResultFragment.newInstance(isCorrect),
-                OnFragmentInteractionListener.RESULT_FRAGMENT_TAG,
+                RESULT_FRAGMENT_TAG,
                 true);
         playerViewModel.updateToPlayerScore(questionViewModel.pointsAllocator(isCorrect));
     }
 
     @Override
     public void removeQuestionFragment() {
-        removeFragment(OnFragmentInteractionListener.QUESTION_FRAGMENT_TAG);
+        removeFragment(QUESTION_FRAGMENT_TAG);
     }
 
     @Override
     public void removeResultFragment() {
-        removeFragment(OnFragmentInteractionListener.RESULT_FRAGMENT_TAG);
+        removeFragment(RESULT_FRAGMENT_TAG);
     }
 
     private void removeFragment(String fragmentTag) {
