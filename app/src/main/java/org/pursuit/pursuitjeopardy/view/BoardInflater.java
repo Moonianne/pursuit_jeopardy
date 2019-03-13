@@ -18,7 +18,7 @@ import org.pursuit.pursuitjeopardy.model.Question;
 
 import java.util.List;
 
-public class BoardInflater {
+public final class BoardInflater {
 
     private LinearLayout linearLayout;
     private List<Question> questions;

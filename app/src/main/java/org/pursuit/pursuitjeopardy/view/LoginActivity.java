@@ -1,4 +1,4 @@
-package org.pursuit.pursuitjeopardy.db;
+package org.pursuit.pursuitjeopardy.view;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import org.pursuit.pursuitjeopardy.R;
+import org.pursuit.pursuitjeopardy.db.PlayerDBHelper;
 import org.pursuit.pursuitjeopardy.model.Player;
-import org.pursuit.pursuitjeopardy.view.MainActivity;
 
 public final class LoginActivity extends AppCompatActivity {
     private EditText login;

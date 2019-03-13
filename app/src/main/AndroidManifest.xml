@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".db.LoginActivity"></activity>
+        <activity android:name=".view.LoginActivity"></activity>
         <activity
             android:name=".view.GameBoardActivity"
             android:screenOrientation="landscape"

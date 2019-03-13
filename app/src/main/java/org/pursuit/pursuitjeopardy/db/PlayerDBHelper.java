@@ -12,7 +12,7 @@ public final class PlayerDBHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "player_table";
     private static final int SCHEMA_VERSION = 1;
 
-    PlayerDBHelper(Context context) {
+    public PlayerDBHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
     }
 
@@ -28,7 +28,7 @@ public final class PlayerDBHelper extends SQLiteOpenHelper {
         //No-Op
     }
 
-    void addPlayer(Player player) {
+    public void addPlayer(Player player) {
         Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE name = '" + player.getName() +
                 "' AND score = '" + player.getCurrentScore() + "';", null);
         if (cursor.getCount() == 0) {

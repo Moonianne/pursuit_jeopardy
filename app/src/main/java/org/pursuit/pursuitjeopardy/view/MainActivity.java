@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import org.pursuit.pursuitjeopardy.R;
 
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
     ImageView logo;
 
     @Override
