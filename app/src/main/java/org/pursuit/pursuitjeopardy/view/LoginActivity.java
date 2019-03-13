@@ -25,7 +25,7 @@ public final class LoginActivity extends AppCompatActivity {
         //TODO make default activity after animation
         this.<ImageView>findViewById(R.id.login_bt).setOnClickListener(v -> {
             db.addPlayer(new Player(login.getText().toString(), 0));
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, GameBoardActivity.class));
         });
     }
 }
