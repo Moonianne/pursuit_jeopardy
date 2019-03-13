@@ -1,7 +1,9 @@
 package org.pursuit.pursuitjeopardy.view;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,9 +13,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.pursuit.pursuitjeopardy.R;
+import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
 
 public final class ResultFragment extends Fragment {
     private static final String CORRECT = "org.pursuit.pursuitjeopardy.RESULT";
+
+    private OnFragmentInteractionListener onFragmentInteractionListener;
     private boolean isCorrect;
 
     public static ResultFragment newInstance(boolean isCorrect) {
@@ -22,6 +27,16 @@ public final class ResultFragment extends Fragment {
         args.putBoolean(CORRECT, isCorrect);
         resultFragment.setArguments(args);
         return resultFragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            onFragmentInteractionListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException("Host Activity Must Implement OnFragmentInteractionListener.");
+        }
     }
 
     @Override
@@ -45,5 +60,22 @@ public final class ResultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         view.<TextView>findViewById(R.id.text_result)
                 .setText(isCorrect ? "CORRECT!" : "WRONG!");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CountDownTimer counterTimer = new CountDownTimer(5000, 2000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //No-Op
+            }
+
+            @Override
+            public void onFinish() {
+                onFragmentInteractionListener.removeResultFragment();
+            }
+        };
+        counterTimer.start();
     }
 }
