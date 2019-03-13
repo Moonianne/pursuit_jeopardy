@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-    static final String QUESTION_FRAGMENT_TAG = "question";
-    static final String RESULT_FRAGMENT_TAG = "result";
-
     private QuestionViewModel questionViewModel;
     private PlayerViewModel playerViewModel;
     private List<LinearLayout> layoutList;
@@ -100,24 +97,27 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         questionViewModel.setCurrentQuestionKey(key);
         inflateFragment(
                 QuestionFragment.newInstance(key),
-                QUESTION_FRAGMENT_TAG, true);
+                OnFragmentInteractionListener.QUESTION_FRAGMENT_TAG, true);
     }
 
     @Override
     public void displayResult(boolean isCorrect) {
         removeQuestionFragment();
-        inflateFragment(ResultFragment.newInstance(isCorrect), RESULT_FRAGMENT_TAG, true);
+        inflateFragment(
+                ResultFragment.newInstance(isCorrect),
+                OnFragmentInteractionListener.RESULT_FRAGMENT_TAG,
+                true);
         playerViewModel.updateToPlayerScore(questionViewModel.pointsAllocator(isCorrect));
     }
 
     @Override
     public void removeQuestionFragment() {
-        removeFragment(QUESTION_FRAGMENT_TAG);
+        removeFragment(OnFragmentInteractionListener.QUESTION_FRAGMENT_TAG);
     }
 
     @Override
     public void removeResultFragment() {
-        removeFragment(RESULT_FRAGMENT_TAG);
+        removeFragment(OnFragmentInteractionListener.RESULT_FRAGMENT_TAG);
     }
 
     private void removeFragment(String fragmentTag) {
