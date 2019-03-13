@@ -112,12 +112,12 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     @Override
     public void removeQuestionFragment() {
-        removeFragment(QUESTION_FRAGMENT_TAG);
+        removeFragment(OnFragmentInteractionListener.QUESTION_FRAGMENT_TAG);
     }
 
     @Override
     public void removeResultFragment() {
-        removeFragment(RESULT_FRAGMENT_TAG);
+        removeFragment(OnFragmentInteractionListener.RESULT_FRAGMENT_TAG);
     }
 
     private void removeFragment(String fragmentTag) {
