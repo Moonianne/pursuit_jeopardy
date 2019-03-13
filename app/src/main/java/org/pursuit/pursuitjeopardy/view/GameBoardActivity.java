@@ -22,16 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class GameBoardActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-
     private QuestionViewModel questionViewModel;
     private PlayerViewModel playerViewModel;
     private List<LinearLayout> layoutList;
+    private TextView playerPoints;
     private Drawable[] drawables;
-    static final String QUESTION_FRAGMENT_TAG = "question";
-    static final String RESULT_FRAGMENT_TAG = "result";
     private ViewGroup viewGroup;
     private TextView playerName; //TODO: implement use
-    private TextView playerPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,6 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         setViewGroup();
     }
 
-    //clipchildren is set in xml and method now only sets viewgroup - which is needed.
     private void setViewGroup() {
         viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
@@ -106,13 +102,26 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     @Override
     public void displayResult(boolean isCorrect) {
-        Fragment destroyFragment = getSupportFragmentManager().findFragmentByTag(QUESTION_FRAGMENT_TAG);
-        removeQuestionView(destroyFragment);
-        inflateFragment(ResultFragment.newInstance(isCorrect), RESULT_FRAGMENT_TAG, true);
+        removeQuestionFragment();
+        inflateFragment(
+                ResultFragment.newInstance(isCorrect),
+                RESULT_FRAGMENT_TAG,
+                true);
         playerViewModel.updateToPlayerScore(questionViewModel.pointsAllocator(isCorrect));
     }
 
-    private void removeQuestionView(Fragment destroyFragment) {
+    @Override
+    public void removeQuestionFragment() {
+        removeFragment(QUESTION_FRAGMENT_TAG);
+    }
+
+    @Override
+    public void removeResultFragment() {
+        removeFragment(RESULT_FRAGMENT_TAG);
+    }
+
+    private void removeFragment(String fragmentTag) {
+        Fragment destroyFragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
         if (destroyFragment != null) {
             getSupportFragmentManager().beginTransaction().remove(destroyFragment).commit();
         }

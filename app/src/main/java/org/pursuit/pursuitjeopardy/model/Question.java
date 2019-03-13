@@ -2,10 +2,6 @@ package org.pursuit.pursuitjeopardy.model;
 
 import java.util.List;
 
-/**
- * model for questions objects received from TriviaResponseModel List
- */
-
 public class Question {
     private String category;
     private String type;
@@ -38,6 +34,5 @@ public class Question {
     public List<String> getIncorrect_answers() {
         return incorrect_answers;
     }
-
 
 }
