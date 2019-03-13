@@ -7,6 +7,10 @@ public interface OnFragmentInteractionListener {
 
     void displayResult(boolean isCorrect);
 
+    void removeQuestionFragment();
+
+    void removeResultFragment();
+
     void communicateQuestionStatus(boolean answered,String tag);
 //
 //    void verifyTileIsAnswered(String tag);
