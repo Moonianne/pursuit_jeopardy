@@ -7,7 +7,7 @@ import org.pursuit.pursuitjeopardy.enums.CategoryEnums;
 import org.pursuit.pursuitjeopardy.enums.DifficultyEnums;
 import org.pursuit.pursuitjeopardy.model.Player;
 import org.pursuit.pursuitjeopardy.model.QuestionRequestModel;
-import org.pursuit.pursuitjeopardy.model.QuestionsModel;
+import org.pursuit.pursuitjeopardy.model.Question;
 import org.pursuit.pursuitjeopardy.model.TriviaResponseModel;
 import org.pursuit.pursuitjeopardy.network.RetrofitSingleton;
 
@@ -26,8 +26,8 @@ import retrofit2.Response;
 public class QuestionsRepository {
     private static QuestionsRepository repositorySingleInstance;
 
-    private MutableLiveData<List<List<QuestionsModel>>> liveData;
-    private List<List<QuestionsModel>> lists;
+    private MutableLiveData<List<List<Question>>> liveData;
+    private List<List<Question>> lists;
     private Map questionsMap;
 
     private QuestionsRepository() {
@@ -52,7 +52,7 @@ public class QuestionsRepository {
     private void setList() {
         this.liveData = new MutableLiveData<>();
         this.lists = new ArrayList<>();
-        this.questionsMap = new HashMap<String, QuestionsModel>();
+        this.questionsMap = new HashMap<String, Question>();
     }
 
     private void populateAllCategories() {
@@ -86,37 +86,37 @@ public class QuestionsRepository {
                 });
     }
 
-    private void parseRetrofitResponseList(List<QuestionsModel> questionsModels) {
-        List<QuestionsModel> questionsModelListWith3Questions =
-                new ArrayList<>(Arrays.asList(new QuestionsModel[]{null, null, null}));
-        for (int i = 0; i < questionsModels.size(); i++) {
-            QuestionsModel currentQuestion = questionsModels.get(i);
+    private void parseRetrofitResponseList(List<Question> questions) {
+        List<Question> questionListWith3Questions =
+                new ArrayList<>(Arrays.asList(new Question[]{null, null, null}));
+        for (int i = 0; i < questions.size(); i++) {
+            Question currentQuestion = questions.get(i);
             String questionDifficulty = currentQuestion.getDifficulty();
 
-            if (questionDifficulty.equals("easy") && questionsModelListWith3Questions.get(0) == null) {
-                questionsModelListWith3Questions.add(0, currentQuestion);
+            if (questionDifficulty.equals("easy") && questionListWith3Questions.get(0) == null) {
+                questionListWith3Questions.add(0, currentQuestion);
                 questionsMap.put(currentQuestion.getCategory() + questionDifficulty, currentQuestion);
             }
             if (questionDifficulty.equals("medium") &&
-                    questionsModelListWith3Questions.get(1) == null) {
-                questionsModelListWith3Questions.add(1, currentQuestion);
+                    questionListWith3Questions.get(1) == null) {
+                questionListWith3Questions.add(1, currentQuestion);
                 questionsMap.put(currentQuestion.getCategory() + questionDifficulty, currentQuestion);
             }
             if (questionDifficulty.equals("hard") &&
-                    questionsModelListWith3Questions.get(2) == null) {
-                questionsModelListWith3Questions.add(2, currentQuestion);
+                    questionListWith3Questions.get(2) == null) {
+                questionListWith3Questions.add(2, currentQuestion);
                 questionsMap.put(currentQuestion.getCategory() + questionDifficulty, currentQuestion);
             }
         }
-        lists.add(questionsModelListWith3Questions);
+        lists.add(questionListWith3Questions);
         liveData.setValue(lists);
     }
 
-    public MutableLiveData<List<List<QuestionsModel>>> getLiveData() {
+    public MutableLiveData<List<List<Question>>> getLiveData() {
         return liveData;
     }
 
-    public Map<String, QuestionsModel> getQuestionsMap() {
+    public Map<String, Question> getQuestionsMap() {
         return questionsMap;
     }
 }

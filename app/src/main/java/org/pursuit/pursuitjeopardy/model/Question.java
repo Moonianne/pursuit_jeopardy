@@ -6,7 +6,7 @@ import java.util.List;
  * model for questions objects received from TriviaResponseModel List
  */
 
-public class QuestionsModel {
+public class Question {
     private String category;
     private String type;
     private String difficulty;

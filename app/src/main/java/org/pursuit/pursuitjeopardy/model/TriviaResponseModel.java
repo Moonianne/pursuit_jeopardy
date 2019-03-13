@@ -8,9 +8,9 @@ import java.util.List;
 
 public class TriviaResponseModel {
 
-    private List<QuestionsModel> results;
+    private List<Question> results;
 
-    public List<QuestionsModel> getResults() {
+    public List<Question> getResults() {
         return results;
     }
 

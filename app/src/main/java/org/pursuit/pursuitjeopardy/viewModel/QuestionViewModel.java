@@ -5,10 +5,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
-import org.pursuit.pursuitjeopardy.model.QuestionsModel;
+import org.pursuit.pursuitjeopardy.model.Question;
 import org.pursuit.pursuitjeopardy.repository.QuestionsRepository;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -20,10 +21,10 @@ public final class QuestionViewModel extends ViewModel {
     private static final String TAG = "org.pursuit.viewModel";
 
     private QuestionsRepository questionsRepository;
-    private LiveData<List<List<QuestionsModel>>> listLiveData;
-    private Map<String, QuestionsModel> questionMap;
+    private LiveData<List<List<Question>>> listLiveData;
+    private Map<String, Question> questionMap;
     private String currentKey;
-    private  boolean currentQuestionAnswered;
+    private boolean currentQuestionAnswered;
 
     public QuestionViewModel() {
         questionsRepository = QuestionsRepository.getRepositorySingleInstance();
@@ -31,11 +32,11 @@ public final class QuestionViewModel extends ViewModel {
         questionMap = questionsRepository.getQuestionsMap();
     }
 
-    public LiveData<List<List<QuestionsModel>>> getListLiveData() {
+    public LiveData<List<List<Question>>> getListLiveData() {
         return listLiveData;
     }
 
-    public Map<String, QuestionsModel> getQuestionMap() {
+    public Map<String, Question> getQuestionMap() {
         return questionMap;
     }
 
@@ -43,19 +44,21 @@ public final class QuestionViewModel extends ViewModel {
         return questionMap.get(key).getQuestion();
     }
 
-    public String getQuestionDifficulty(String key){ return questionMap.get(key).getDifficulty();}
+    public String getQuestionDifficulty(String key) {
+        return questionMap.get(key).getDifficulty();
+    }
 
     public String[] getAnswers(String key) {
 
-        QuestionsModel questionsModel = questionMap.get(key);
+        Question question = questionMap.get(key);
 
-        if (questionsModel.getCorrect_answer().equals("true") ||
-                questionsModel.getCorrect_answer().equals("false")) {
+        if (question.getCorrect_answer().equals("true") ||
+                question.getCorrect_answer().equals("false")) {
             return new String[]{"True", "False"};
         }
 
-        List<String> answers = new ArrayList<>(questionsModel.getIncorrect_answers());
-        answers.add(questionsModel.getCorrect_answer());
+        List<String> answers = new ArrayList<>(question.getIncorrect_answers());
+        answers.add(question.getCorrect_answer());
 
         Collections.shuffle(answers);
 
@@ -66,8 +69,8 @@ public final class QuestionViewModel extends ViewModel {
     }
 
     public String getCorrect(String key) {
-        QuestionsModel questionsModel = questionMap.get(key);
-        return questionsModel.getCorrect_answer();
+        Question question = questionMap.get(key);
+        return question.getCorrect_answer();
     }
 
     public int pointsAllocator(boolean isCorrect) {
@@ -86,11 +89,11 @@ public final class QuestionViewModel extends ViewModel {
         return 0;
     }
 
-    public void setCurrentQuestionKey(String key){
+    public void setCurrentQuestionKey(String key) {
         currentKey = key;
     }
 
-    public String getCurrentQuestionKey(){
+    public String getCurrentQuestionKey() {
         return currentKey;
     }
 

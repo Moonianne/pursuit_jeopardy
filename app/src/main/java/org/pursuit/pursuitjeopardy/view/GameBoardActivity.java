@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
 import org.pursuit.pursuitjeopardy.controller.OnFragmentInteractionListener;
-import org.pursuit.pursuitjeopardy.model.QuestionsModel;
+import org.pursuit.pursuitjeopardy.model.Question;
 import org.pursuit.pursuitjeopardy.viewModel.PlayerViewModel;
 import org.pursuit.pursuitjeopardy.viewModel.QuestionViewModel;
 
@@ -38,14 +37,15 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
-        setClipChildren();
+        setViewGroup();
         findAndLoadLayout();
         setQuestionViewModel();
         setPlayerModel();
         setDrawables();
         setViewGroup();
     }
-//clipchildren is set in xml and method now only sets viewgroup - which is needed.
+
+    //clipchildren is set in xml and method now only sets viewgroup - which is needed.
     private void setViewGroup() {
         viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
@@ -69,7 +69,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     private void setQuestionViewModel() {
         questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
-        questionViewModel.getListLiveData().observe(this, (List<List<QuestionsModel>> lists) -> {
+        questionViewModel.getListLiveData().observe(this, (List<List<Question>> lists) -> {
             assert lists != null;
             if (lists.size() == 5) {
                 for (int i = 0; i < lists.size(); i++) {
