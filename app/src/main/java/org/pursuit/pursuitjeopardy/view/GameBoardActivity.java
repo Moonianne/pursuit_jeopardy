@@ -37,7 +37,8 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         setViewGroup();
         findAndLoadLayout();
         setQuestionViewModel();
-        setPlayerModel();
+        setPlayerViewModel();
+        setScoreBoard();
         setDrawables();
         setViewGroup();
     }
@@ -81,9 +82,17 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         });
     }
 
-    private void setPlayerModel() {
+    private void setPlayerViewModel() {
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel.class);
-        playerViewModel.getPlayerPoints().observe(this, integer -> playerPoints.setText("Points: " + integer));
+        playerViewModel.getPlayerPoints().observe(this, integer -> {
+                playerPoints.setText("Points: " + integer);
+        }
+        );
+    }
+
+    private void setScoreBoard() {
+        playerName.append(playerViewModel.getPlayerName());
+        playerPoints.append(String.valueOf(0));
     }
 
     private void setDrawables() {

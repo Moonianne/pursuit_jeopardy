@@ -1,15 +1,11 @@
 package org.pursuit.pursuitjeopardy.model;
 
 public class Player {
+
     private String name;
     private int currentScore;
 
     public Player(){}
-
-    public Player(String name, int currentScore) {
-        this.name = name;
-        this.currentScore = currentScore;
-    }
 
     public String getName() {
         return name;

@@ -10,7 +10,7 @@ import org.pursuit.pursuitjeopardy.model.Player;
 public final class PlayerDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "player";
     private static final String TABLE_NAME = "player_table";
-    private static final int SCHEMA_VERSION = 1;
+    private static final int SCHEMA_VERSION = 3;
 
     public PlayerDBHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
@@ -20,12 +20,13 @@ public final class PlayerDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME +
                 " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "last_name TEXT, name TEXT, fur_color TEXT);");
+                "name TEXT, score INTEGER);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //No-Op
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        onCreate(db);
     }
 
     public void addPlayer(Player player) {

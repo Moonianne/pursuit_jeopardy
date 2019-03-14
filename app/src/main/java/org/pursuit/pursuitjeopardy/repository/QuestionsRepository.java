@@ -31,7 +31,6 @@ public class QuestionsRepository {
     private Map questionsMap;
 
     private QuestionsRepository() {
-        setPlayer();
         setList();
         populateAllCategories();
     }
@@ -43,10 +42,6 @@ public class QuestionsRepository {
             repositorySingleInstance = new QuestionsRepository();
             return repositorySingleInstance;
         }
-    }
-
-    public Player setPlayer() {
-        return new Player();
     }
 
     private void setList() {
