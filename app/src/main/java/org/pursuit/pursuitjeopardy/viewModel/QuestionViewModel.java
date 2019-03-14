@@ -24,7 +24,6 @@ public final class QuestionViewModel extends ViewModel {
     private LiveData<List<List<Question>>> listLiveData;
     private Map<String, Question> questionMap;
     private String currentKey;
-    private boolean currentQuestionAnswered;
 
     public QuestionViewModel() {
         questionsRepository = QuestionsRepository.getRepositorySingleInstance();
@@ -38,6 +37,10 @@ public final class QuestionViewModel extends ViewModel {
 
     public Map<String, Question> getQuestionMap() {
         return questionMap;
+    }
+
+    public Question getQuestionObj(String key) {
+        return questionMap.get(key);
     }
 
     public String getQuestion(String key) {
@@ -97,11 +100,17 @@ public final class QuestionViewModel extends ViewModel {
         return currentKey;
     }
 
-    public boolean isCurrentQuestionAnswered() {
-        return currentQuestionAnswered;
-    }
-
-    public void setCurrentQuestionAnswered(boolean currentQuestionStatus) {
-        this.currentQuestionAnswered = currentQuestionStatus;
+    public static boolean wereAllQuestionsAnswered(){
+        Map<String,Question> map = QuestionsRepository.getRepositorySingleInstance().getQuestionsMap();
+        boolean result = false;
+        for (Question q : map.values()) {
+            if(q.isAnswered()){
+                result = true;
+            }else{
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 }
