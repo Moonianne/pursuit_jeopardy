@@ -9,7 +9,15 @@ public class Question {
     private String question;
     private String correct_answer;
     private List<String> incorrect_answers;
-    private boolean wasOpened;
+    private boolean answered;
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
+    }
 
     public String getCategory() {
         return category;

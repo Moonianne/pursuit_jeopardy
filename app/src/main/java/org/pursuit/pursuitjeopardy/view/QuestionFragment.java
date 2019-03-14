@@ -92,7 +92,7 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        viewModel.setCurrentQuestionAnswered(true);
+        viewModel.getQuestionObj(viewmodelKey).setAnswered(true);
         RadioButton radioButton = answerRadioGroup.findViewById(answerRadioGroup.getCheckedRadioButtonId());
         boolean isCorrect = viewModel
                 .getCorrect(viewmodelKey)
@@ -103,6 +103,6 @@ public final class QuestionFragment extends Fragment implements View.OnClickList
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        onFragmentInteractionListener.communicateQuestionStatus(viewModel.isCurrentQuestionAnswered(),viewmodelKey);
+        onFragmentInteractionListener.communicateQuestionStatus(viewModel.getQuestionObj(viewmodelKey).isAnswered(),viewmodelKey);
     }
 }
