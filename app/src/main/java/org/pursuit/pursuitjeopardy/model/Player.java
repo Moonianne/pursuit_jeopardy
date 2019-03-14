@@ -4,11 +4,7 @@ public class Player {
     private String name;
     private int currentScore;
 
-    public Player(){}
-
-    public Player(String name, int currentScore) {
-        this.name = name;
-        this.currentScore = currentScore;
+    public Player() {
     }
 
     public String getName() {
