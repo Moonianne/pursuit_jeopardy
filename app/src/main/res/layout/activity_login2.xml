@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".view.LoginActivity">
 
     <TextView
@@ -36,10 +37,10 @@
 
     <ImageButton
         android:id="@+id/login_bt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/login_icon"
         android:layout_width="80dp"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:src="@drawable/login_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

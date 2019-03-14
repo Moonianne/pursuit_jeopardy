@@ -18,26 +18,34 @@ public final class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AnimationUtils
-                .loadAnimation(getApplicationContext(), R.anim.logo_spin)
-                .setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        startBoard();
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-                });
+        Animation spin =
+                AnimationUtils
+                        .loadAnimation(getApplicationContext(), R.anim.logo_spin);
+        spin.setAnimationListener(getAnimationListener());
         this.<ImageView>findViewById(R.id.logo)
                 .startAnimation(AnimationUtils.loadAnimation(
                         getApplicationContext(),
                         R.anim.logo_spin));
+        this.<ImageView>findViewById(R.id.logo).startAnimation(spin);
+    }
+
+    private Animation.AnimationListener getAnimationListener() {
+        return new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //No-op
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                startBoard();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                //No-op
+            }
+        };
     }
 
     public void startBoard() {
