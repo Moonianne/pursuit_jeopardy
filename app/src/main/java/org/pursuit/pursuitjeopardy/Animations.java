@@ -76,4 +76,7 @@ public class Animations {
         v.setElevation(999999999);
         v.animate().alpha(1.0f).setStartDelay(500).setDuration(500);
     }
+    public static void closeResultFragmentAnimate(View v) {
+        v.animate().alpha(0).setStartDelay(1000).setDuration(2000);
+    }
 }

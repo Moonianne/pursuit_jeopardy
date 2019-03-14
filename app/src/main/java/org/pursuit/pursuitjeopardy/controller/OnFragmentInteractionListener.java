@@ -1,7 +1,5 @@
 package org.pursuit.pursuitjeopardy.controller;
 
-import android.view.View;
-
 public interface OnFragmentInteractionListener {
     String QUESTION_FRAGMENT_TAG = "question";
     String RESULT_FRAGMENT_TAG = "result";
@@ -15,8 +13,6 @@ public interface OnFragmentInteractionListener {
     void removeResultFragment();
 
     void communicateQuestionStatus(boolean answered,String tag);
-//
-//    void verifyTileIsAnswered(String tag);
-//
-//    void markTileIsUnanswered(String tag);
+
+    void reportGameStatus(boolean gameFinished);
 }

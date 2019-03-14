@@ -10,6 +10,7 @@ import android.support.v7.widget.CardView;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.pursuit.pursuitjeopardy.Animations;
 import org.pursuit.pursuitjeopardy.R;
@@ -145,6 +146,13 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         }
     }
 
+    @Override
+    public void reportGameStatus(boolean gameFinished) {
+        if(gameFinished){
+            Toast.makeText(this, "GAME COMPLETED", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void verifyTileIsAnswered(String tag) {
         CardView cardview = viewGroup.findViewWithTag(tag);
         if (cardview != null) {
@@ -170,6 +178,8 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
         if (addToBack) fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+
+
 }
 
 
