@@ -13,9 +13,9 @@ import org.pursuit.pursuitjeopardy.repository.PlayerRepository;
 import org.pursuit.pursuitjeopardy.repository.QuestionsRepository;
 
 public final class PlayerViewModel extends AndroidViewModel {
-
     private final PlayerRepository playerRepository;
     private final Player player;
+
     private MutableLiveData<Integer> playerPoints;
 
     public PlayerViewModel(@NonNull Application application) {
@@ -26,27 +26,26 @@ public final class PlayerViewModel extends AndroidViewModel {
     }
 
 
-    public void updateToPlayerScore(int points){
+    public void updateToPlayerScore(int points) {
         player.setCurrentScore(player.getCurrentScore() + points);
         playerPoints.setValue(player.getCurrentScore());
     }
 
-    public void setPlayer(String name){
+    public void setPlayer(String name) {
         player.setName(name);
         player.setCurrentScore(0);
     }
 
-    public void addPlayerToDatabase(){
+    public void addPlayerToDatabase() {
         playerRepository.addPlayerToDatabase(player);
     }
 
-    public String getPlayerName(){
+    public String getPlayerName() {
         return player.getName();
     }
 
     public LiveData<Integer> getPlayerPoints() {
         return playerPoints;
     }
-
 
 }

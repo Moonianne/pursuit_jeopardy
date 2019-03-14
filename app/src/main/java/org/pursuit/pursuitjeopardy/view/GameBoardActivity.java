@@ -34,6 +34,7 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
+
         setViewGroup();
         findAndLoadLayout();
         setQuestionViewModel();
@@ -84,9 +85,8 @@ public final class GameBoardActivity extends AppCompatActivity implements OnFrag
 
     private void setPlayerViewModel() {
         playerViewModel = ViewModelProviders.of(this).get(PlayerViewModel.class);
-        playerViewModel.getPlayerPoints().observe(this, integer -> {
-                playerPoints.setText("Points: " + integer);
-        }
+        playerViewModel.getPlayerPoints().observe(
+                this, integer -> playerPoints.setText("Points: " + integer)
         );
     }
 

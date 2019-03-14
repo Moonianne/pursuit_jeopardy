@@ -12,32 +12,38 @@ import android.widget.ImageView;
 import org.pursuit.pursuitjeopardy.R;
 
 public final class MainActivity extends AppCompatActivity {
-    ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        logo = findViewById(R.id.logo);
 
-        Animation spin = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.logo_spin);
-        spin.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                startBoard();
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        logo.startAnimation(spin);
+        AnimationUtils
+                .loadAnimation(getApplicationContext(), R.anim.logo_spin)
+                .setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        startBoard();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                });
+        this.<ImageView>findViewById(R.id.logo)
+                .startAnimation(AnimationUtils.loadAnimation(
+                        getApplicationContext(),
+                        R.anim.logo_spin));
     }
 
     public void startBoard() {
-        startActivity(new Intent(this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        startActivity(
+                new Intent(this, LoginActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         finish();
     }
 }
